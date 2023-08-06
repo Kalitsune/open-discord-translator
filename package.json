@@ -1,0 +1,36 @@
+{
+  "name": "open-discord-translator",
+  "version": "1.0.0",
+  "description": "An open source discord bot using the latest discord integration features and supporting multiple translation backend",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kalitsune/open-discord-translator.git"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "discord",
+    "discord-bot",
+    "bot",
+    "translation",
+    "discord-translator",
+    "discord-translation",
+    "multilangual"
+  ],
+  "author": "Kalitsune (fanny@kalitsune.cloud)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Kalitsune/open-discord-translator/issues"
+  },
+  "homepage": "https://github.com/Kalitsune/open-discord-translator#readme",
+  "dependencies": {
+    "discord.js": "^14.12.1",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
