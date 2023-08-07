@@ -4,19 +4,17 @@ const { REST, Routes } = require('discord.js');
 const rest = new REST().setToken(process.env.TOKEN);
 
 module.exports = {
-    async deployAll() {
-
-    },
-
-    async deployCommands(clientId, commands) {
+    async deployCommands(clientId, commands, guildId=process.env.GUILD) {
+        console.log(`[WARNING] commands are not valid, re-deploying...`);
+        // deploy new commands
         try {
             // If a guild id is provided, only register commands to that guild
-            if (process.env.GUILD) {
+            if (guildId) {
                 console.log(`Started refreshing ${commands.length} Guild (/) commands.`);
 
                 // The put method is used to fully refresh all commands in the guild with the current set
                 const data = await rest.put(
-                    Routes.applicationGuildCommands(clientId, process.env.GUILD),
+                    Routes.applicationGuildCommands(clientId, guildId),
                     { body: commands },
                 );
 
@@ -36,5 +34,5 @@ module.exports = {
             // And of course, make sure you catch and log any errors!
             console.error(error);
         }
-    }
+    },
 }

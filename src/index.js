@@ -7,6 +7,7 @@ const { Client, Events, Collection } = require('discord.js');
 
 // init discord.js
 const client = new Client({intents: []});
+console.log(`[STARTUP] Starting bot...`)
 
 // init commands
 client.commands = new Collection();
