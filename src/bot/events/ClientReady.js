@@ -6,9 +6,15 @@ module.exports = {
         // check registered commands
         console.log(`Ready! Serving ${client.commands.size} commands as ${client.user.tag}`);
 
-        await checkCommandValidity(client);
+        if (process.env.SKIP_COMMAND_VALIDATION) {
+            console.log(`[INFO] commands validity check skipped.`);
+        } else {
+            //check commands validity
+            console.log(`[INFO] starting commands validity check...`);
+            await checkCommandValidity(client);
+            console.log(`[INFO] commands validity check completed.`);
 
-        console.log(`[INFO] commands parity check is over.`);
+        }
     }
 }
 
@@ -41,7 +47,7 @@ function checkJSONEquality(command1, command2) {
             for (let i = 0 ; i < command1[key].length; i += 1) {
                 //check if the array is the same length
                 if (command1[key].length !== command2[key].length) {
-                    console.log(`[WARNING] 0commands parity check failed: found ${command2['name']}/${[key]}:ARRAY instead of ${command1['name']}/${[key]}:ARRAY.`);
+                    console.log(`[WARNING] commands validity check failed: properties count mismatch.`);
                     return false;
                 }
 
@@ -52,11 +58,11 @@ function checkJSONEquality(command1, command2) {
             }
         // object check
         } else if (typeof command1[key] === 'object' && command1[key] !== null && !checkJSONEquality(command1[key], command2[key])) {
-            console.log(`[WARNING] 1commands parity check failed: found ${command2['name']}/${[key]}:OBJECT instead of ${command1['name']}/${[key]}:OBJECT.`);
+            console.log(`[WARNING] commands validity check failed: found ${command2['name']}/${[key]}:OBJECT instead of ${command1['name']}/${[key]}:OBJECT.`);
             return false;
         // other check
         } else if ((typeof command1[key] === 'string' ? (command1[key].trim()) : (command1[key] || false)) !== (command2[key] || false)) {
-            console.log(`[WARNING] 2commands parity check failed: found ${command1['name']}/${[key]}:"${command1[key]}" instead of ${command2['name']}/${[key]}:"${command2[key]}".`);
+            console.log(`[WARNING] commands validity check failed: found ${command1['name']}/${[key]}:"${command1[key]}" instead of ${command2['name']}/${[key]}:"${command2[key]}".`);
             return false;
         }
     }
@@ -89,4 +95,5 @@ async function checkCommandValidity(client) {
             return false;
         }
     }
+
 }
