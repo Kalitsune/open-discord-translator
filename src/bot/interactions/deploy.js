@@ -10,7 +10,7 @@ module.exports = {
         try {
             // If a guild id is provided, only register commands to that guild
             if (guildId) {
-                console.log(`Started refreshing ${commands.length} Guild (/) commands.`);
+                if (commands.length) console.log(`Started refreshing ${commands.length} Guild (/) commands.`);
 
                 // The put method is used to fully refresh all commands in the guild with the current set
                 const data = await rest.put(
@@ -18,9 +18,10 @@ module.exports = {
                     { body: commands },
                 );
 
-                console.log(`Successfully reloaded ${data.length} Guild (/) commands.`);
+                if (data.length) console.log(`Successfully reloaded ${data.length} Guild (/) commands.`);
             } else { // Otherwise, register commands globally
-                console.log(`Started refreshing ${commands.length} application (/) commands.`);
+                if (commands.length) console.log(`Started refreshing ${commands.length} application (/) commands.`);
+                console.log(`[NOTE] global commands updates are not instantaneous.`);
 
                 // The put method is used to fully refresh all commands in the guild with the current set
                 const data = await rest.put(
@@ -28,7 +29,7 @@ module.exports = {
                     { body: commands },
                 );
 
-                console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+                if (data.length) console.log(`Successfully reloaded ${data.length} application (/) commands.`);
             }
         } catch (error) {
             // And of course, make sure you catch and log any errors!

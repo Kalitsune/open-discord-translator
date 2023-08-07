@@ -79,6 +79,20 @@ async function checkCommandValidity(client) {
         await deployCommands(client.application.id, [], "");
     }
 
+    //if the guild is unset, check if there's any guild with commands registered
+    if (!process.env.GUILD) {
+        client.guilds.cache.forEach(guild => {
+            // fetch guild commands and resolve the promise continues without blocking the script even tho the log apparition order may be wrong
+            guild.commands.fetch().then(guildCommandsCache => {
+                // check if the guild has commands registered
+                if (guildCommandsCache.size > 0) {
+                    console.log(`[WARNING] guild (${guild.id}) has commands registered.`);
+                    deployCommands(client.application.id, [], guild.id);
+                }
+            });
+        });
+    }
+
     //check that the commands are the same
     if (commands.length !== registeredCommands.length) {
         console.log(`[WARNING] commands parity check failed: found ${registeredCommands.length} commands instead of ${commands.length}.`);
@@ -95,5 +109,4 @@ async function checkCommandValidity(client) {
             return false;
         }
     }
-
 }
