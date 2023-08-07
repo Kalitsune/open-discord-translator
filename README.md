@@ -33,6 +33,7 @@ npm start
 | `TOKEN`                   | The discord bot token                                                                                                                                                                  | `none`        |
 | `GUILD`                   | The guild ID where the bot will be restricted to                                                                                                                                       | `none`        |
 | `SKIP_COMMAND_VALIDATION` | If set to true, the bot will not check if the commands are up to date                                                                                                                  | `false`       |
+| `ACCENT_COLOR`            | Color used for the bot embeds can be a number, hex or [one of those](https://old.discordjs.dev/#/docs/discord.js/14.11.0/typedef/ColorResolvable)                                      | `#5865F2`     |
 | `TRANSLATION_API_DRIVER`  | The translation API to use ([check supported drivers](#translation-api-drivers))                                                                                                       | `google`      |
 | `GOOGLE_API_KEY`          | Your [google api key](https://ezgielouzeh.medium.com/google-translate-api-javascript-81f55039611d), only needed if you use the [google paid translation API](#translation-api-drivers) | `none`        |
 | `DEEPL_AUTH_KEY`          | Your deepl auth key, only needed if you use the [deepl translation API](#translation-api-drivers)                                                                                      | `none`        |
@@ -85,7 +86,7 @@ module.exports = {
     async init() {
         // if you need to initialize the driver, do it here
         // you must return the supported source and target languages 
-        // (be sure to add 'auto' if your driver supports automatic source language detection)
+        // warning: the supported languages can't be more than 25 due to discord limitations
         const supported_languages = [
             {
                 "language": "Afrikaans",
@@ -93,10 +94,9 @@ module.exports = {
             },
             // ...
         ];
-        const source = supported_languages.push({ "language": "Automatic", "code": "auto" });
+        const source = supported_languages;
         const target = supported_languages;
-        return { source, target }
-        return { source, target }
+        return { sources, targets }
     },
     async translate(text, to, from= "auto") {
         // translate the text from the source language to the target language

@@ -42,11 +42,12 @@ async function fetchVars(client) {
 
 function checkJSONEquality(command1, command2) {
     for (const key in command1) {
+        console.log(`[DEBUG] checking ${command1['name']}/${[key]}:${typeof command1[key]}...`)
         // array check
         if ((Array.isArray(command1[key]))) {
             for (let i = 0 ; i < command1[key].length; i += 1) {
                 //check if the array is the same length
-                if (command1[key].length !== command2[key].length) {
+                if (command1[key] && !command2[key] || !command1[key] && command2[key] || command1[key].length !== command2[key].length) {
                     console.log(`[WARNING] commands validity check failed: properties count mismatch.`);
                     return false;
                 }

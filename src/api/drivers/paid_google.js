@@ -1,6 +1,5 @@
 const axios = require('axios');
 const error = require('../../errors.js');
-const {request} = require("axios");
 
 function handleErrors(response) {
     if (response.data.error) {
@@ -33,11 +32,11 @@ module.exports = {
         handleErrors(res);
 
         const supported_languages = res.data.data.languages
-        console.log(supported_languages)
+
         // return the supported languages
-        const source = supported_languages.push({ "language": "Automatic", "code": "auto" });
-        const target = supported_languages;
-        return { source, target }
+        const sources = supported_languages
+        const targets = supported_languages;
+        return { sources, targets }
     },
     async translate(text, to, from = "auto") {
         // translate the text from the source language to the target language
