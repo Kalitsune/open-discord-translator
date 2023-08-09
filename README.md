@@ -77,7 +77,7 @@ the `./discord/interactions/commands/` discord directory contains the discord co
 ### Add a new translation API driver
 create a new file in the `./src/api/drivers/` directory
 ```bash
-touch ./src/api/drivers/mydriver.js
+touch ./src/translations/drivers/mydriver.js
 ```
 
 make sure to export the following functions

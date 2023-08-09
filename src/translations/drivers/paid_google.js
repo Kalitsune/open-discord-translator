@@ -25,7 +25,7 @@ module.exports = {
         // you must return the supported source and target languages
         // (be sure to add 'auto' if your driver supports automatic source language detection)
 
-        // request the supported languages from the google translate api
+        // request the supported languages from the google translate translations
         const res = await axios.get(`https://translation.googleapis.com/language/translate/v2/languages?key=${process.env.GOOGLE_APPLICATION_CREDENTIALS}`, {validateStatus: () => true});
 
         // handle errors
@@ -44,7 +44,7 @@ module.exports = {
         // feel free to add more environment variables if needed (don't forget to update the readme)
 
         // needs $GOOGLE_APPLICATION_CREDENTIALS
-        // request the translation from the google translation api
+        // request the translation from the google translation translations
         let res = await axios.post(
             `https://translation.googleapis.com/language/translate/v2?key=${process.env.GOOGLE_APPLICATION_CREDENTIALS}`,
             { q: text, target: to, source: from}, {validateStatus: () => true}

@@ -5,7 +5,7 @@ require('dotenv').config({path: fs.existsSync('.env.dev') ? '.env.dev' : '.env'}
 
 const { Client, Events, Collection } = require('discord.js');
 
-const api = require('./api/api.js');
+const api = require('./translations/translations.js');
 
 async function main() {
   // init discord.js
