@@ -42,7 +42,6 @@ async function fetchVars(client) {
 
 function checkJSONEquality(command1, command2) {
     for (const key in command1) {
-        console.log(`[DEBUG] checking ${command1['name']}/${[key]}:${typeof command1[key]}...`)
         // array check
         if ((Array.isArray(command1[key]))) {
             for (let i = 0 ; i < command1[key].length; i += 1) {
@@ -58,12 +57,22 @@ function checkJSONEquality(command1, command2) {
                 }
             }
         // object check
-        } else if (typeof command1[key] === 'object' && command1[key] !== null && !checkJSONEquality(command1[key], command2[key])) {
-            console.log(`[WARNING] commands validity check failed: found ${command2['name']}/${[key]}:OBJECT instead of ${command1['name']}/${[key]}:OBJECT.`);
-            return false;
+        } else if (typeof command1[key] === 'object') {
+            //discord does not return the localisations of the commands, so we skip this check otherwise it would fail
+            if (key.toLowerCase().includes("local")) return true;
+
+            //check if there is an object in command2
+            if (typeof command2[key] !== 'object' || ((command1[key]) ^ (command2[key]))) {
+                console.log(`[WARNING] commands validity check failed: found ${command1?.name}/${[key]}:OBJECT instead of ${command2?.name}/${[key]}:OBJECT.`);
+                return false;
+            } else {
+                //check command validity
+                console.log("analysing object: " + key)
+                return checkJSONEquality(command1[key], command2[key])
+            }
         // other check
         } else if ((typeof command1[key] === 'string' ? (command1[key].trim()) : (command1[key] || false)) !== (command2[key] || false)) {
-            console.log(`[WARNING] commands validity check failed: found ${command1['name']}/${[key]}:"${command1[key]}" instead of ${command2['name']}/${[key]}:"${command2[key]}".`);
+            console.log(`[WARNING] commands validity check failed: found ${command1?.name}/${[key]}:"${command1?.key}" instead of ${command2?.name}/${[key]}:"${command2?.key}".`);
             return false;
         }
     }
