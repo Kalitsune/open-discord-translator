@@ -124,13 +124,13 @@ module.exports = {
         // if you need to initialize the driver, do it here
         // feel free to add more environment variables if needed (don't forget to update the readme)
     },
-    async addReplicaChannels(sourceChannelId, targetChannelId, targetLanguageCode) {
+    async addReplicaChannels(guildId, sourceChannelId, targetChannelId, targetLanguageCode) {
         // add a channel to be replicated in another languages
     },
-    async getReplicaChannels() {
+    async getReplicaChannels(guildID) {
         // get all the channels to be replicated
     },
-    async removeReplicaChannels(sourceChannelId, targetChannelId) {
+    async removeReplicaChannel(sourceChannelId, targetChannelId) {
         // remove a channel from the replication list
     },
 }
