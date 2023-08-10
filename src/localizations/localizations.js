@@ -1,18 +1,19 @@
 // translation util
 const fs = require('fs');
 const path = require('path');
-
+const vm = require('vm');
 
 //the folder configs contains the localizations files
-// getTranslation(key, localization) returns the key of the translation in the localization file,
+// getTranslation(key, locale) returns the key of the translation in the localization file,
 // it also supports nested keys, for example:
 // getLocalization('settings:language/set', 'en')
 // returns the key located in {"settings":{"language":{"set":"hi, I'm the returned value :D"}}} in the en.json file
 // https://discord.com/developers/docs/reference#locales
 module.exports = {
-    getLocalization(key, localization) {
+    getLocalization(key, locale, data = undefined) {
         // normalize localization
-        if (localization === 'EnglishUS' || localization === 'EnglishGB') localization = 'English';
+        locale = localeTable[locale] || locale;
+
         // parse the key
         const domain = key.split(':');
         const keys = domain[1].split('.');
@@ -20,9 +21,9 @@ module.exports = {
         // load the localizations file
         let translation
         try {
-            translation = require(`./configs/${localization}.json`)[domain[0]];
+            translation = require(`./configs/${locale}.json`)[domain[0]];
         } catch (e) {
-            console.log(`[WARNING] The localization file for ${localization} does not exist.`);
+            console.log(`[WARNING] The localization file for ${locale} does not exist.`);
             translation = require(`./configs/English.json`)[domain[0]];
         }
 
@@ -39,14 +40,14 @@ module.exports = {
                 for (const key of keys) {
                     translation = translation[key];
                 }
-                return translation;
+                return eval(translation, data);
             } catch (e) { // fails if the key does not exist in english
                 // at this point, just return the key
                 console.log(`[WARNING] The key ${key} does not exist in the localization file for English.`);
                 return key;
             }
         }
-        return translation;
+        return eval(translation, data);
     },
 
     getAvailableLocalizations() {
@@ -72,4 +73,45 @@ module.exports = {
         }
         return localizationsValues;
     },
+}
+
+function eval(string, data) {
+    if (data === undefined) {
+        return string;
+    } else {
+        return vm.runInNewContext(`\`${string}\``, data);
+    }
+}
+
+const localeTable = {
+    "bg": "Bulgarian",
+    "zh-CN": "ChineseCN",
+    "zh-TW": "ChineseTW",
+    "hr": "Croatian",
+    "cs": "Czech",
+    "da": "Danish",
+    "nl": "Dutch",
+    "en-US": "English",
+    "en-GB": "English",
+    "fi": "Finnish",
+    "fr": "French",
+    "de": "German",
+    "el": "Greek",
+    "hi": "Hindi",
+    "hu": "Hungarian",
+    "it": "Italian",
+    "ja": "Japanese",
+    "ko": "Korean",
+    "lt": "Lithuanian",
+    "no": "Norwegian",
+    "pl": "Polish",
+    "pt-BR": "PortugueseBR",
+    "ro": "Romanian",
+    "ru": "Russian",
+    "es-ES": "Spanish",
+    "sv-SE": "Swedish",
+    "th": "Thai",
+    "tr": "Turkish",
+    "uk": "Ukrainian",
+    "vi": "Vietnamese"
 }
