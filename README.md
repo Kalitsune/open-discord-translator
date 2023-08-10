@@ -124,13 +124,6 @@ module.exports = {
         // if you need to initialize the driver, do it here
         // feel free to add more environment variables if needed (don't forget to update the readme)
     },
-    async getLanguage(userId) {
-        // get the language code associated with the user id
-        // return the value
-    },
-    async setLanguage(userId, languageCode) {
-        // set the language code for this user id
-    },
     async addReplicaChannels(sourceChannelId, targetChannelId, targetLanguageCode) {
         // add a channel to be replicated in another languages
     },
