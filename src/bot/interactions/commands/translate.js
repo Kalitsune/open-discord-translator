@@ -1,5 +1,6 @@
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
-const { getKeyLocalizations } = require('../../../localizations/localizations.js');
+
+const { getKeyLocalizations, getLocalization } = require('../../../localizations/localizations.js');
 
 module.exports = {
     init (client) {
@@ -45,8 +46,12 @@ module.exports = {
         const translated = await interaction.client.translate(text, to, from);
 
         //make the embed
+        const data = {
+            from: getFlagEmoji(translated.from),
+            to: getFlagEmoji(to)
+        }
         const responseEmbed = new EmbedBuilder().setColor(process.env.ACCENT_COLOR)
-            .addFields({ name: `Translated  ${getFlagEmoji(translated.from)}  → ${getFlagEmoji(to)}`, value: translated.text})
+            .addFields({ name: getLocalization("commands:translate.success", interaction.locale ,data), value: translated.text})
         await interaction.reply({ embeds: [responseEmbed], ephemeral: true});
     },
 };
@@ -54,6 +59,7 @@ module.exports = {
 
 function getFlagEmoji (countryCode) {
     // en is not a flag so pick gb/us instead
+    if (countryCode === 'ja') countryCode = 'jp';
     if (countryCode === 'en') countryCode = ['gb','us'][Math.floor(Math.random()*2)];
 
     return countryCode.replace(/./g,(ch)=>String.fromCodePoint(0x1f1a5+ch.toUpperCase().charCodeAt()))

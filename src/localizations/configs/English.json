@@ -2,7 +2,8 @@
   "commands": {
     "translate": {
       "name": "translate",
-      "description": "Translate the text to the specified language."
+      "description": "Translate the text to the specified language.",
+      "success": "Translated ${from}  → ${to}"
     }
   },
   "common": {
