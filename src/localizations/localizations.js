@@ -13,7 +13,6 @@ module.exports = {
     getLocalization(key, localization) {
         // normalize localization
         if (localization === 'EnglishUS' || localization === 'EnglishGB') localization = 'English';
-
         // parse the key
         const domain = key.split(':');
         const keys = domain[1].split('.');
@@ -47,6 +46,7 @@ module.exports = {
                 return key;
             }
         }
+        return translation;
     },
 
     getAvailableLocalizations() {
@@ -70,7 +70,6 @@ module.exports = {
                 localizationsValues[localization] = l;
             }
         }
-        console.log(localizationsValues)
         return localizationsValues;
     },
 }

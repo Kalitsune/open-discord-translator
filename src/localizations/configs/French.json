@@ -1,0 +1,24 @@
+{
+  "commands": {
+    "translate": {
+      "name": "traduire",
+      "description": "Traduit le texte dans une langue donnée."
+    }
+  },
+  "common": {
+    "options": {
+      "text": {
+        "name" : "message",
+        "description": "Le message à traduire."
+      },
+      "to": {
+        "name": "vers",
+        "description": "La langue dans la quelle traduire le message."
+      },
+      "from": {
+        "name": "depuis",
+        "description": "La langue du message."
+      }
+    }
+  }
+}

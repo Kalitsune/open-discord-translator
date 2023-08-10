@@ -1,15 +1,13 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { EmbedBuilder } = require('discord.js');
-
-
+const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const { getKeyLocalizations } = require('../../../localizations/localizations.js');
 
 module.exports = {
     init (client) {
         //get the country codes
-        sources = client.languages.sources;
+        let sources = client.languages.sources;
         if (sources.length > 25) sources.length = 25;
 
-        targets = client.languages.targets;
+        let targets = client.languages.targets;
         if (targets.length > 25) targets.length = 25;
 
         // edit the command
@@ -19,19 +17,23 @@ module.exports = {
         sources.map((lang) => {return {name: lang.language, value: lang.code}}).forEach(choice => command.data.options[2].addChoices(choice));
     },
     data: new SlashCommandBuilder()
-        .setName('translate')
-        .setDescription('Translate your message to the language of your choice privately..')
+        .setName('translate').setDescription("Translate text to another language.")
+        .setNameLocalizations(getKeyLocalizations('commands:translate.name'))
+        .setDescriptionLocalizations(getKeyLocalizations('commands:translate.description'))
         .addStringOption(option =>
-            option.setName('text')
-                .setDescription('The text to translate.')
+            option.setName('text').setDescription("The text to translate.")
+                .setNameLocalizations(getKeyLocalizations('common:options.text.name'))
+                .setDescriptionLocalizations(getKeyLocalizations('common:options.text.description'))
                 .setRequired(true))
         .addStringOption(option =>
-            option.setName('to')
-                .setDescription('The lang to translate to.')
+            option.setName('to').setDescription("The language to translate to.")
+                .setNameLocalizations(getKeyLocalizations('common:options.to.name'))
+                .setDescriptionLocalizations(getKeyLocalizations('common:options.to.description'))
                 .setRequired(true))
         .addStringOption(option =>
-            option.setName('from')
-                .setDescription('The lang to translate from (default: auto).')
+            option.setName('from').setDescription("The language to translate from.")
+                .setNameLocalizations(getKeyLocalizations('common:options.from.name'))
+                .setDescriptionLocalizations(getKeyLocalizations('common:options.from.description'))
                 .setRequired(false)),
     async execute(interaction) {
         //    translate

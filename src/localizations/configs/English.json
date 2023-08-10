@@ -1,0 +1,24 @@
+{
+  "commands": {
+    "translate": {
+      "name": "translate",
+      "description": "Translate the text to the specified language."
+    }
+  },
+  "common": {
+    "options": {
+      "text": {
+        "name" : "text",
+        "description": "The text to translate."
+      },
+      "to": {
+        "name": "to",
+        "description": "The language to translate to."
+      },
+      "from": {
+        "name": "from",
+        "description": "The language to translate from."
+      }
+    }
+  }
+}
