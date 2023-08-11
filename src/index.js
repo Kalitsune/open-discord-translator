@@ -3,13 +3,15 @@ const fs = require('fs')
 const path = require('path');
 require('dotenv').config({path: fs.existsSync('.env.dev') ? '.env.dev' : '.env'}); // init dotenv to use .env.dev instead of .env if it exists
 
-const { Client, Events, Collection } = require('discord.js');
+const { Client, Events, Collection, GatewayIntentBits} = require('discord.js');
 
 const api = require('./translations/translations.js');
 
 async function main() {
   // init discord.js
-  const client = new Client({intents: []});
+  const client = new Client({intents: [
+      GatewayIntentBits.Guilds
+  ]});
   console.log(`[STARTUP] Starting bot...`)
 
   // init the translation API

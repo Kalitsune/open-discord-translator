@@ -4,6 +4,15 @@
       "name": "traduire",
       "description": "Traduit le texte dans une langue donnée.",
       "success": "Traduit ${from}  → ${to}"
+    },
+    "send": {
+      "name": "envoyer",
+      "description": "Envoie directement la traduction de votre message.",
+      "success": {
+        "title":  "Envoyé !",
+        "description": "Message: ${url}",
+        "footer": "[Ce message disparaîtra dans ${time}s...]"
+      }
     }
   },
   "common": {
