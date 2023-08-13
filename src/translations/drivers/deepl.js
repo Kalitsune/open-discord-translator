@@ -13,7 +13,8 @@ module.exports = {
     async translate(text, to, from= null) {
         // translate the text
         try {
-            const translation = await translator.translateText(text, from, to);
+            //                                                   Deepl doesn't support en as target language, so we use en-US instead
+            const translation = await translator.translateText(text, from, to === "en" ? "en-US" : to);
             // you must return the translated text and the source language, if it is auto, then return the detected language
             return {text: translation.text, from: translation.detectedSourceLang};
         } catch (e) {
