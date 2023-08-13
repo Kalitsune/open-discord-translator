@@ -34,8 +34,9 @@ async function main() {
     client.languages = languages;
   }
   // limit the number of languages to 25
-  if (client.languages.length > 25) client.languages.length = 25; // limit the number of languages to 25
-
+  if (client.languages.length > 25) client.languages.length = 25;
+  // filter undefined lanugages
+  client.languages = client.languages.filter(lang => lang !== undefined);
   client.translate = api.translate;
 
   // init commands

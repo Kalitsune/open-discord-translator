@@ -5,7 +5,7 @@ const { getKeyLocalizations, getLocalization } = require('../../../localizations
 module.exports = {
     init (client) {
         //get the country codes
-        let languages = client.languages.map((lang) => {return {name: lang.language, value: lang.code}});
+        let languages = client.languages.map((lang) => {return {name: lang.name, value: lang.code}});
         // edit the command
         const command = client.commands.get('translate');
         // transform the sources/targets into choices {name, value}
@@ -36,7 +36,7 @@ module.exports = {
         const text = interaction.options.getString('text');
         const to = interaction.options.getString('to');
         //    ,
-        const from = interaction.options.getString('from') || 'auto';
+        const from = interaction.options.getString('from');
 
         const translated = await interaction.client.translate(text, to, from);
 

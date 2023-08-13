@@ -31,10 +31,12 @@ module.exports = {
         // handle errors
         handleErrors(res);
 
-        // return the supported languages
-        return res.data.data.languages;
+        // return the supported languages but rename the `language` field to `name`
+        return res.data.data.languages.map((lang) => {
+            return {name: lang.language, code: lang.code};
+        });
     },
-    async translate(text, to, from = "auto") {
+    async translate(text, to, from = undefined) {
         // translate the text from the source language to the target language
         // return the translated text
         // feel free to add more environment variables if needed (don't forget to update the readme)
@@ -49,6 +51,6 @@ module.exports = {
         // handle errors
         handleErrors(res);
 
-        return {text: res.data.data.translations[0].translatedText, from: from === "auto"  ? res.data.data.translations[0].detectedSourceLanguage : from};
+        return {text: res.data.data.translations[0].translatedText, from: res.data.data.translations[0].detectedSourceLanguage};
     }
 }

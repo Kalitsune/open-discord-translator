@@ -9,7 +9,7 @@ module.exports = {
         // return the supported languages
         return supported_languages;
     },
-    async translate(text, to, from = "auto") {
+    async translate(text, to, from = undefined) {
         const { raw } = await translate(text, { to, from });
         return { text: raw.sentences[0].trans, from: raw.src };
     }
@@ -19,419 +19,419 @@ module.exports = {
 // this is an arbitrary list of languages, feel free to change it
 const supported_languages = [
     {
-        "language": "Afrikaans",
+        "name": "Afrikaans",
         "code": "af"
     },
     {
-        "language": "Albanian",
+        "name": "Albanian",
         "code": "sq"
     },
     {
-        "language": "Amharic",
+        "name": "Amharic",
         "code": "am"
     },
     {
-        "language": "Arabic",
+        "name": "Arabic",
         "code": "ar"
     },
     {
-        "language": "Armenian",
+        "name": "Armenian",
         "code": "hy"
     },
     {
-        "language": "Azerbaijani",
+        "name": "Azerbaijani",
         "code": "az"
     },
     {
-        "language": "Basque",
+        "name": "Basque",
         "code": "eu"
     },
     {
-        "language": "Belarusian",
+        "name": "Belarusian",
         "code": "be"
     },
     {
-        "language": "Bengali",
+        "name": "Bengali",
         "code": "bn"
     },
     {
-        "language": "Bosnian",
+        "name": "Bosnian",
         "code": "bs"
     },
     {
-        "language": "Bulgarian",
+        "name": "Bulgarian",
         "code": "bg"
     },
     {
-        "language": "Catalan",
+        "name": "Catalan",
         "code": "ca"
     },
     {
-        "language": "Cebuano",
+        "name": "Cebuano",
         "code": "ceb"
     },
     {
-        "language": "Chinese (Simplified)",
+        "name": "Chinese (Simplified)",
         "code": "zh-CN"
     },
     {
-        "language": "Chinese (Traditional)",
+        "name": "Chinese (Traditional)",
         "code": "zh-TW"
     },
     {
-        "language": "Corsican",
+        "name": "Corsican",
         "code": "co"
     },
     {
-        "language": "Croatian",
+        "name": "Croatian",
         "code": "hr"
     },
     {
-        "language": "Czech",
+        "name": "Czech",
         "code": "cs"
     },
     {
-        "language": "Danish",
+        "name": "Danish",
         "code": "da"
     },
     {
-        "language": "Dutch",
+        "name": "Dutch",
         "code": "nl"
     },
     {
-        "language": "English",
+        "name": "English",
         "code": "en"
     },
     {
-        "language": "Esperanto",
+        "name": "Esperanto",
         "code": "eo"
     },
     {
-        "language": "Estonian",
+        "name": "Estonian",
         "code": "et"
     },
     {
-        "language": "Finnish",
+        "name": "Finnish",
         "code": "fi"
     },
     {
-        "language": "French",
+        "name": "French",
         "code": "fr"
     },
     {
-        "language": "Frisian",
+        "name": "Frisian",
         "code": "fy"
     },
     {
-        "language": "Galician",
+        "name": "Galician",
         "code": "gl"
     },
     {
-        "language": "Georgian",
+        "name": "Georgian",
         "code": "ka"
     },
     {
-        "language": "German",
+        "name": "German",
         "code": "de"
     },
     {
-        "language": "Greek",
+        "name": "Greek",
         "code": "el"
     },
     {
-        "language": "Gujarati",
+        "name": "Gujarati",
         "code": "gu"
     },
     {
-        "language": "Haitian Creole",
+        "name": "Haitian Creole",
         "code": "ht"
     },
     {
-        "language": "Hausa",
+        "name": "Hausa",
         "code": "ha"
     },
     {
-        "language": "Hawaiian",
+        "name": "Hawaiian",
         "code": "haw"
     },
     {
-        "language": "Hebrew",
+        "name": "Hebrew",
         "code": "iw"
     },
     {
-        "language": "Hindi",
+        "name": "Hindi",
         "code": "hi"
     },
     {
-        "language": "Hmong",
+        "name": "Hmong",
         "code": "hmn"
     },
     {
-        "language": "Hungarian",
+        "name": "Hungarian",
         "code": "hu"
     },
     {
-        "language": "Icelandic",
+        "name": "Icelandic",
         "code": "is"
     },
     {
-        "language": "Igbo",
+        "name": "Igbo",
         "code": "ig"
     },
     {
-        "language": "Indonesian",
+        "name": "Indonesian",
         "code": "id"
     },
     {
-        "language": "Irish",
+        "name": "Irish",
         "code": "ga"
     },
     {
-        "language": "Italian",
+        "name": "Italian",
         "code": "it"
     },
     {
-        "language": "Japanese",
+        "name": "Japanese",
         "code": "ja"
     },
     {
-        "language": "Javanese",
+        "name": "Javanese",
         "code": "jw"
     },
     {
-        "language": "Kannada",
+        "name": "Kannada",
         "code": "kn"
     },
     {
-        "language": "Kazakh",
+        "name": "Kazakh",
         "code": "kk"
     },
     {
-        "language": "Khmer",
+        "name": "Khmer",
         "code": "km"
     },
     {
-        "language": "Korean",
+        "name": "Korean",
         "code": "ko"
     },
     {
-        "language": "Kurdish",
+        "name": "Kurdish",
         "code": "ku"
     },
     {
-        "language": "Kyrgyz",
+        "name": "Kyrgyz",
         "code": "ky"
     },
     {
-        "language": "Lao",
+        "name": "Lao",
         "code": "lo"
     },
     {
-        "language": "Latin",
+        "name": "Latin",
         "code": "la"
     },
     {
-        "language": "Latvian",
+        "name": "Latvian",
         "code": "lv"
     },
     {
-        "language": "Lithuanian",
+        "name": "Lithuanian",
         "code": "lt"
     },
     {
-        "language": "Luxembourgish",
+        "name": "Luxembourgish",
         "code": "lb"
     },
     {
-        "language": "Macedonian",
+        "name": "Macedonian",
         "code": "mk"
     },
     {
-        "language": "Malagasy",
+        "name": "Malagasy",
         "code": "mg"
     },
     {
-        "language": "Malay",
+        "name": "Malay",
         "code": "ms"
     },
     {
-        "language": "Malayalam",
+        "name": "Malayalam",
         "code": "ml"
     },
     {
-        "language": "Maltese",
+        "name": "Maltese",
         "code": "mt"
     },
     {
-        "language": "Maori",
+        "name": "Maori",
         "code": "mi"
     },
     {
-        "language": "Marathi",
+        "name": "Marathi",
         "code": "mr"
     },
     {
-        "language": "Mongolian",
+        "name": "Mongolian",
         "code": "mn"
     },
     {
-        "language": "Myanmar (Burmese)",
+        "name": "Myanmar (Burmese)",
         "code": "my"
     },
     {
-        "language": "Nepali",
+        "name": "Nepali",
         "code": "ne"
     },
     {
-        "language": "Norwegian",
+        "name": "Norwegian",
         "code": "no"
     },
     {
-        "language": "Nyanja (Chichewa)",
+        "name": "Nyanja (Chichewa)",
         "code": "ny"
     },
     {
-        "language": "Pashto",
+        "name": "Pashto",
         "code": "ps"
     },
     {
-        "language": "Persian",
+        "name": "Persian",
         "code": "fa"
     },
     {
-        "language": "Polish",
+        "name": "Polish",
         "code": "pl"
     },
     {
-        "language": "Portuguese (Portugal, Brazil)",
+        "name": "Portuguese (Portugal, Brazil)",
         "code": "pt"
     },
     {
-        "language": "Punjabi",
+        "name": "Punjabi",
         "code": "pa"
     },
     {
-        "language": "Romanian",
+        "name": "Romanian",
         "code": "ro"
     },
     {
-        "language": "Russian",
+        "name": "Russian",
         "code": "ru"
     },
     {
-        "language": "Samoan",
+        "name": "Samoan",
         "code": "sm"
     },
     {
-        "language": "Scots Gaelic",
+        "name": "Scots Gaelic",
         "code": "gd"
     },
     {
-        "language": "Serbian",
+        "name": "Serbian",
         "code": "sr"
     },
     {
-        "language": "Sesotho",
+        "name": "Sesotho",
         "code": "st"
     },
     {
-        "language": "Shona",
+        "name": "Shona",
         "code": "sn"
     },
     {
-        "language": "Sindhi",
+        "name": "Sindhi",
         "code": "sd"
     },
     {
-        "language": "Sinhala (Sinhalese)",
+        "name": "Sinhala (Sinhalese)",
         "code": "si"
     },
     {
-        "language": "Slovak",
+        "name": "Slovak",
         "code": "sk"
     },
     {
-        "language": "Slovenian",
+        "name": "Slovenian",
         "code": "sl"
     },
     {
-        "language": "Somali",
+        "name": "Somali",
         "code": "so"
     },
     {
-        "language": "Spanish",
+        "name": "Spanish",
         "code": "es"
     },
     {
-        "language": "Sundanese",
+        "name": "Sundanese",
         "code": "su"
     },
     {
-        "language": "Swahili",
+        "name": "Swahili",
         "code": "sw"
     },
     {
-        "language": "Swedish",
+        "name": "Swedish",
         "code": "sv"
     },
     {
-        "language": "Tagalog (Filipino)",
+        "name": "Tagalog (Filipino)",
         "code": "tl"
     },
     {
-        "language": "Tajik",
+        "name": "Tajik",
         "code": "tg"
     },
     {
-        "language": "Tamil",
+        "name": "Tamil",
         "code": "ta"
     },
     {
-        "language": "Telugu",
+        "name": "Telugu",
         "code": "te"
     },
     {
-        "language": "Thai",
+        "name": "Thai",
         "code": "th"
     },
     {
-        "language": "Turkish",
+        "name": "Turkish",
         "code": "tr"
     },
     {
-        "language": "Ukrainian",
+        "name": "Ukrainian",
         "code": "uk"
     },
     {
-        "language": "Urdu",
+        "name": "Urdu",
         "code": "ur"
     },
     {
-        "language": "Uzbek",
+        "name": "Uzbek",
         "code": "uz"
     },
     {
-        "language": "Vietnamese",
+        "name": "Vietnamese",
         "code": "vi"
     },
     {
-        "language": "Welsh",
+        "name": "Welsh",
         "code": "cy"
     },
     {
-        "language": "Xhosa",
+        "name": "Xhosa",
         "code": "xh"
     },
     {
-        "language": "Yiddish",
+        "name": "Yiddish",
         "code": "yi"
     },
     {
-        "language": "Yoruba",
+        "name": "Yoruba",
         "code": "yo"
     },
     {
-        "language": "Zulu",
+        "name": "Zulu",
         "code": "zu"
     }
 ]
