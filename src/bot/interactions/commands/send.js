@@ -7,17 +7,12 @@ const {getLocalization} = require("../../../localizations/localizations");
 module.exports = {
     init (client) {
         //get the country codes
-        let sources = client.languages.sources;
-        if (sources.length > 25) sources.length = 25;
-
-        let targets = client.languages.targets;
-        if (targets.length > 25) targets.length = 25;
-
+        let languages = client.languages.map((lang) => {return {name: lang.language, value: lang.code}});
         // edit the command
         const command = client.commands.get('send');
         // transform the sources/targets into choices {name, value}
-        targets.map((lang) => {return {name: lang.language, value: lang.code}}).forEach(choice => command.data.options[1].addChoices(choice));
-        sources.map((lang) => {return {name: lang.language, value: lang.code}}).forEach(choice => command.data.options[2].addChoices(choice));
+        languages.forEach(choice => command.data.options[1].addChoices(choice));
+        languages.forEach(choice => command.data.options[2].addChoices(choice));
     },
     data: new SlashCommandBuilder()
         .setName('send').setDescription("Directly send text in another language under your name.")

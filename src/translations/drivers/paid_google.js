@@ -31,12 +31,8 @@ module.exports = {
         // handle errors
         handleErrors(res);
 
-        const supported_languages = res.data.data.languages
-
         // return the supported languages
-        const sources = supported_languages
-        const targets = supported_languages;
-        return { sources, targets }
+        return res.data.data.languages;
     },
     async translate(text, to, from = "auto") {
         // translate the text from the source language to the target language

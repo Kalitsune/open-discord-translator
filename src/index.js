@@ -16,7 +16,26 @@ async function main() {
 
   // init the translation API
   console.log(`[STARTUP] initialising ${process.env.TRANSLATION_API_DRIVER} translation driver...`);
-  client.languages = await api.init();
+  // init the translation API and filter the languages to be the
+  const languages = await api.init();
+  // limit the selected languages to the ones in the .env file
+  if (process.env.SELECTED_LANGUAGES) {
+    // the .env format is csv so make it an array
+    const selectedLanguages = process.env.SELECTED_LANGUAGES.split(',');
+
+    // to keep the SELECTED_LANGUAGES order we need to first parse the languages to easily find them
+    const parsedLanguages = {};
+    languages.forEach(lang => parsedLanguages[lang.code] = lang);
+
+    // then we can filter the languages to keep only the ones in the .env file
+    client.languages = selectedLanguages.map(lang => parsedLanguages[lang]);
+  } else {
+    // if no languages are specified in the .env file use all the languages (note: they will be capped at 25)
+    client.languages = languages;
+  }
+  // limit the number of languages to 25
+  if (client.languages.length > 25) client.languages.length = 25; // limit the number of languages to 25
+
   client.translate = api.translate;
 
   // init commands

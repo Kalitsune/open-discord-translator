@@ -28,17 +28,20 @@ npm start
 ```
 
 ### Environment variables
-| Variable                  | Description                                                                                                                                                                            | Default value |
-|---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
-| `TOKEN`                   | The discord bot token                                                                                                                                                                  | `none`        |
-| `GUILD`                   | The guild ID where the bot will be restricted to                                                                                                                                       | `none`        |
-| `SKIP_COMMAND_VALIDATION` | If set to true, the bot will not check if the commands are up to date                                                                                                                  | `false`       |
-| `ACCENT_COLOR`            | Color used for the bot embeds can be a number, hex or [one of those](https://old.discordjs.dev/#/docs/discord.js/14.11.0/typedef/ColorResolvable)                                      | `#5865F2`     |
-| `DELETE_BUTTON_TIMEOUT`   | The time in seconds before the delete button for the `send` disappear (leave empty for infinite)                                                                                       | `10`          |  
-| `TRANSLATION_API_DRIVER`  | The translation API to use ([check supported drivers](#translation-api-drivers))                                                                                                       | `google`      |
-| `GOOGLE_API_KEY`          | Your [google api key](https://ezgielouzeh.medium.com/google-translate-api-javascript-81f55039611d), only needed if you use the [google paid translation API](#translation-api-drivers) | `none`        |
-| `DEEPL_AUTH_KEY`          | Your deepl auth key, only needed if you use the [deepl translation API](#translation-api-drivers)                                                                                      | `none`        |
-| `DATABASE_DRIVER`         | The database driver to use ([check supported drivers](#database-api-drivers))                                                                                                          | `sqlite`      |
+| Variable                  | Description                                                                                                                                                                            | Default value       |
+|---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
+| `TOKEN`                   | The discord bot token                                                                                                                                                                  | `none`              |
+| `GUILD`                   | The guild ID where the bot will be restricted to                                                                                                                                       | `none`              |
+| `SKIP_COMMAND_VALIDATION` | If set to true, the bot will not check if the commands are up to date                                                                                                                  | `false`             |
+| `ACCENT_COLOR`            | Color used for the bot embeds can be a number, hex or [one of those](https://old.discordjs.dev/#/docs/discord.js/14.11.0/typedef/ColorResolvable)                                      | `#5865F2`           |
+| `DELETE_BUTTON_TIMEOUT`   | The time in seconds before the delete button for the `send` disappear (leave empty for infinite)                                                                                       | `10`                |  
+| `TRANSLATION_API_DRIVER`  | The translation API to use ([check supported drivers](#translation-api-drivers))                                                                                                       | `google`            |
+| `SELECTED_LANGUAGES`      | The languages to use for the translation command, if empty, the first 25 supported languages returned by the translation driver will be used                                           | `[CSV, check .env]` |
+| `GOOGLE_API_KEY`          | Your [google api key](https://ezgielouzeh.medium.com/google-translate-api-javascript-81f55039611d), only needed if you use the [google paid translation API](#translation-api-drivers) | `none`              |
+| `DEEPL_AUTH_KEY`          | Your deepl auth key, only needed if you use the [deepl translation API](#translation-api-drivers)                                                                                      | `none`              |
+| `DATABASE_DRIVER`         | The database driver to use ([check supported drivers](#database-api-drivers))                                                                                                          | `sqlite`            |
+| `SQLITE_PATH`             | The path to the sqlite database file, only needed if you use the [sqlite database driver](#database-api-drivers)                                                                       | `./database.sqlite` |
+
 ### Translation API drivers
 | Driver name   | Description                                                                           |
 |---------------|---------------------------------------------------------------------------------------|
@@ -95,9 +98,7 @@ module.exports = {
             },
             // ...
         ];
-        const source = supported_languages;
-        const target = supported_languages;
-        return { sources, targets }
+        return supported_languages
     },
     async translate(text, to, from= "auto") {
         // translate the text from the source language to the target language
