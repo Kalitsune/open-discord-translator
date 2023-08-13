@@ -15,7 +15,6 @@ module.exports = {
             console.log(`[INFO] starting commands validity check...`);
             await checkCommandValidity(client);
             console.log(`[INFO] commands validity check completed.`);
-
         }
     }
 }
@@ -108,6 +107,13 @@ async function checkCommandValidity(client) {
     //check that the commands are the same
     if (commands.length !== registeredCommands.length) {
         console.log(`[WARNING] commands parity check failed: found ${registeredCommands.length} commands instead of ${commands.length}.`);
+        await deployCommands(client.application.id, client.commands.map(c => c.data.toJSON()));
+        return false;
+    }
+
+    //check if the names matches
+    if (!registeredCommands.every(el => commands.includes(el))) {
+        console.log(`[WARNING] commands names mismatch: ${registeredCommands} vs ${commands}`)
         await deployCommands(client.application.id, client.commands.map(c => c.data.toJSON()));
         return false;
     }

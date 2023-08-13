@@ -58,7 +58,6 @@ async function main() {
   }
   console.info(`[STARTUP] ${client.commands.size} commands found.`);
 
-
   //init events
   client.events = new Collection();
 
@@ -75,7 +74,8 @@ async function main() {
       console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
     }
   }
-  console.info(`[STARTUP] ${client.events.size} events found.`);
+  console.info(`[STARTUP] ${eventFiles.length} events found.`);
+
   // run bot
   await client.login(process.env.TOKEN);
 }
