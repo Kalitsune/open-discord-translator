@@ -1,8 +1,10 @@
 //ClientReady event
+const { Events } = require('discord.js');
 const { deployCommands } = require('../interactions/deploy.js');
 
 module.exports = {
-    async handler(client) {
+    name: Events.ClientReady,
+    async execute(client) {
         // check registered commands
         console.log(`Ready! Serving ${client.commands.size} commands as ${client.user.tag}`);
 

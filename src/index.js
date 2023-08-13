@@ -68,11 +68,11 @@ async function main() {
   for (const file of eventFiles) {
     const filePath = path.join(eventsPath, file);
     const event = require(filePath);
-    if ('handler' in event) {
-      client.events.set(file.slice(0,-3), event);
-      client.on(Events[file.slice(0,-3)], event.handler);
+    // Set a new item in the Collection with the key as the command name and the value as the exported module
+    if ('name' in event && 'execute' in event) {
+      client.on(event.name, event.execute)
     } else {
-      console.log(`[WARNING] The event at ${filePath} is missing an handler.`);
+      console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
     }
   }
   console.info(`[STARTUP] ${client.events.size} events found.`);
