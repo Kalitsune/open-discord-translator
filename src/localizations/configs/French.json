@@ -11,7 +11,8 @@
       "success": {
         "title":  "Envoyé !",
         "description": "Message: ${url}",
-        "footer": "[Ce message disparaîtra dans ${time}s...]"
+        "footer": "[Ce message disparaîtra dans ${time}s...]",
+        "delete": "Supprimer"
       }
     }
   },

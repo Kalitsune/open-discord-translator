@@ -86,7 +86,7 @@ module.exports = {
                 .setColor(process.env.ACCENT_COLOR);
             const deleteButton = new ButtonBuilder()
                 .setCustomId(`delete-${message.id + isThread ? interaction.channel.id : ''}`)
-                .setLabel('Delete')
+                .setLabel(getLocalization('commands:send.success.delete', interaction.locale))
                 .setEmoji('🗑️')
                 .setStyle(ButtonStyle.Danger)
             await interaction.reply({embeds: [responseEmbed],components: [{type:1, components:[deleteButton]}], ephemeral: true});
