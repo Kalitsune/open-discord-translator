@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, EmbedBuilder} = require('discord.js');
+const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, DiscordjsErrorCodes} = require('discord.js');
 const { ChannelType} = require('discord-api-types/v10');
 
 const { getKeyLocalizations } = require('../../../localizations/localizations.js');
@@ -48,20 +48,18 @@ module.exports = {
         const translated = await interaction.client.translate(text, to, from);
 
         // if possible use webhooks, otherwise use the bot
+        // if the channel is a thread the webhook needs to be created in the parent channel
+        const isThread = interaction.channel.type === ChannelType.PublicThread || interaction.channel.type === ChannelType.PrivateThread;
+        const webhookChannel = isThread ? interaction.channel.parent : interaction.channel;
+        let webhook;
         try {
             // send a message using the user name and pfp using webhooks
-
-            // if the channel is a thread the webhook needs to be created in the parent channel
-            const isThread = interaction.channel.type === ChannelType.PublicThread || interaction.channel.type === ChannelType.PrivateThread;
-            const webhookChannel = isThread ? interaction.channel.parent : interaction.channel;
-
             //check if there's a webhook that can be used
-            let webhook = await webhookChannel.fetchWebhooks().then(webhooks => {
+            webhook = await webhookChannel.fetchWebhooks().then(webhooks => {
                 return webhooks.find(webhook => webhook.owner.id === interaction.client.user.id);
             });
 
             if (!webhook) {
-                console.log("creating a webhook");
                 //create a webhook
                 webhook = await webhookChannel.createWebhook({
                     name: interaction.client.user.username,
@@ -70,37 +68,43 @@ module.exports = {
                 });
             }
 
-            // send the message
-            const message = await webhook.send({
-                content: translated.text,
-                username: interaction.user.username,
-                avatarURL: interaction.user.displayAvatarURL({format: 'png', dynamic: true}),
-                threadId: isThread ? interaction.channel.id : null
-            });
-
-            // reply with an ephemeral delete button
-            const responseEmbed = new EmbedBuilder()
-                .setTitle(getLocalization('commands:send.success.title', interaction.locale))
-                .setDescription(getLocalization('commands:send.success.description', interaction.locale, {url: message.url}))
-                .setFooter(process.env.DELETE_BUTTON_TIMEOUT === "-1" ? null : {text: getLocalization('commands:send.success.footer', interaction.locale, {time: process.env.DELETE_BUTTON_TIMEOUT})})
-                .setColor(process.env.ACCENT_COLOR);
-            const deleteButton = new ButtonBuilder()
-                .setCustomId(`delete-${message.id + isThread ? interaction.channel.id : ''}`)
-                .setLabel(getLocalization('commands:send.success.delete', interaction.locale))
-                .setEmoji('🗑️')
-                .setStyle(ButtonStyle.Danger)
-            await interaction.reply({embeds: [responseEmbed],components: [{type:1, components:[deleteButton]}], ephemeral: true});
-            // wait 10s
-            if (process.env.DELETE_BUTTON_TIMEOUT !== "-1") {
-                await new Promise(resolve => setTimeout(resolve, process.env.DELETE_BUTTON_TIMEOUT*1000));
-                await interaction.deleteReply();
-            }
         } catch (e) {
-            // check if error is due to missing permissions or if the channel don't support threads
-            if (!(e.code === 50013 || e.code === 50046)) {
-                console.log(e);
-            }
+            // fallback method
             return interaction.reply(translated.text)
         }
+
+        // send the message
+        const message = await webhook.send({
+            content: translated.text,
+            username: interaction.user.username,
+            avatarURL: interaction.user.displayAvatarURL({format: 'png', dynamic: true}),
+            threadId: isThread ? interaction.channel.id : null
+        });
+        // reply with an ephemeral delete button
+        const responseEmbed = new EmbedBuilder()
+            .setTitle(getLocalization('commands:send.success.title', interaction.locale))
+            .setDescription(getLocalization('commands:send.success.description', interaction.locale, {url: message.url}))
+            .setFooter(process.env.DELETE_BUTTON_TIMEOUT ? {text: getLocalization('commands:send.success.footer', interaction.locale, {time: process.env.DELETE_BUTTON_TIMEOUT})} : null)
+            .setColor(process.env.ACCENT_COLOR);
+        const deleteButton = new ButtonBuilder()
+            .setCustomId(`delete-${message.id}`)
+            .setLabel(getLocalization('commands:send.success.delete', interaction.locale))
+            .setEmoji('🗑️')
+            .setStyle(ButtonStyle.Danger)
+        const response = await interaction.reply({embeds: [responseEmbed],components: [{type:1, components:[deleteButton]}], ephemeral: true});
+        // wait for the button to be pressed
+        const collectorFilter = i => i.component.data.custom_id === `delete-${message.id}`;
+        try {
+            // wait for the button to be pressed
+            await response.awaitMessageComponent({ filter: collectorFilter, time: process.env.DELETE_BUTTON_TIMEOUT*1000 });
+            //delete the webhook message
+            await message.delete();
+        } catch (e) {
+            if (e instanceof DiscordjsErrorCodes.InteractionCollectorError) {
+                console.log(e);
+            }
+        }
+        //remove the delete message
+        return await interaction.deleteReply();
     }
 };
