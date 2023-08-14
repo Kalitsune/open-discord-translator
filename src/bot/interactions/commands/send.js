@@ -1,8 +1,8 @@
 const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, DiscordjsErrorCodes} = require('discord.js');
 const { ChannelType} = require('discord-api-types/v10');
 
-const { getKeyLocalizations } = require('../../../localizations/localizations.js');
-const {getLocalization} = require("../../../localizations/localizations");
+const { getKeyLocalizations, getLocalization } = require('../../../localizations/localizations.js');
+const { splitString } = require("../../../utils");
 
 module.exports = {
     init (client) {
@@ -42,6 +42,8 @@ module.exports = {
 
         const translated = await interaction.client.translate(text, to, from);
 
+        const messages = splitString(translated.text, 2000);
+
         // if possible use webhooks, otherwise use the bot
         // if the channel is a thread the webhook needs to be created in the parent channel
         const isThread = interaction.channel.type === ChannelType.PublicThread || interaction.channel.type === ChannelType.PrivateThread;
@@ -65,35 +67,45 @@ module.exports = {
 
         } catch (e) {
             // fallback method
-            return interaction.reply(translated.text)
+            await interaction.reply(messages[0]);
+            // loop through the other messages (if any) and send them as follow ups
+            for (let i = 1; i < messages.length; i++) {
+                await interaction.followUp(messages[i]);
+            }
+            return;
         }
 
         // send the message
-        const message = await webhook.send({
-            content: translated.text,
-            username: interaction.user.username,
-            avatarURL: interaction.user.displayAvatarURL({format: 'png', dynamic: true}),
-            threadId: isThread ? interaction.channel.id : null
-        });
+        let sentMessages = [];
+        for (let i = 0; i < messages.length; i++) {
+            sentMessages.push(await webhook.send({
+                content: messages[i],
+                username: interaction.user.username,
+                avatarURL: interaction.user.displayAvatarURL({format: 'png', dynamic: true}),
+                threadId: isThread ? interaction.channel.id : null
+            }));
+        }
         // reply with an ephemeral delete button
         const responseEmbed = new EmbedBuilder()
             .setTitle(getLocalization('commands:send.success.title', interaction.locale))
-            .setDescription(getLocalization('commands:send.success.description', interaction.locale, {url: message.url}))
+            .setDescription(getLocalization('commands:send.success.description', interaction.locale, {url: sentMessages[0].url}))
             .setFooter(process.env.DELETE_BUTTON_TIMEOUT ? {text: getLocalization('commands:send.success.footer', interaction.locale, {time: process.env.DELETE_BUTTON_TIMEOUT})} : null)
             .setColor(process.env.ACCENT_COLOR);
         const deleteButton = new ButtonBuilder()
-            .setCustomId(`delete-${message.id}`)
+            .setCustomId(`delete-${sentMessages[0].id}`)
             .setLabel(getLocalization('commands:send.success.delete', interaction.locale))
             .setEmoji('🗑️')
             .setStyle(ButtonStyle.Danger)
         const response = await interaction.reply({embeds: [responseEmbed],components: [{type:1, components:[deleteButton]}], ephemeral: true});
         // wait for the button to be pressed
-        const collectorFilter = i => i.component.data.custom_id === `delete-${message.id}`;
+        const collectorFilter = i => i.component.data.custom_id === `delete-${sentMessages[0].id}`;
         try {
             // wait for the button to be pressed
             await response.awaitMessageComponent({ filter: collectorFilter, time: process.env.DELETE_BUTTON_TIMEOUT*1000 });
             //delete the webhook message
-            await message.delete();
+            for (let i = 0; i < sentMessages.length; i++) {
+                sentMessages[i].delete();
+            }
         } catch (e) {
             if (e instanceof DiscordjsErrorCodes.InteractionCollectorError) {
                 console.log(e);

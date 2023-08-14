@@ -1,7 +1,7 @@
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 
-const { getKeyLocalizations, getLocalization } = require('../../../localizations/localizations.js');
-const { getFlagEmoji } = require('../../../utils');
+const { getKeyLocalizations } = require('../../../localizations/localizations.js');
+const { makeResponseEmbeds } = require('../../../utils');
 
 module.exports = {
     init (client) {
@@ -41,13 +41,6 @@ module.exports = {
 
         const translated = await interaction.client.translate(text, to, from);
 
-        //make the embed
-        const data = {
-            from: getFlagEmoji(translated.from),
-            to: getFlagEmoji(to)
-        }
-        const responseEmbed = new EmbedBuilder().setColor(process.env.ACCENT_COLOR)
-            .addFields({ name: getLocalization("commands:translate.success", interaction.locale ,data), value: translated.text})
-        await interaction.reply({ embeds: [responseEmbed], ephemeral: true});
+        await interaction.reply({ embeds: makeResponseEmbeds(interaction.locale, translated.from, to, translated.text), ephemeral: true});
     },
 };
