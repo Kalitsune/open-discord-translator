@@ -1,6 +1,7 @@
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 
 const { getKeyLocalizations, getLocalization } = require('../../../localizations/localizations.js');
+const { getFlagEmoji } = require('../../../utils');
 
 module.exports = {
     init (client) {
@@ -50,12 +51,3 @@ module.exports = {
         await interaction.reply({ embeds: [responseEmbed], ephemeral: true});
     },
 };
-
-
-function getFlagEmoji (countryCode) {
-    // en is not a flag so pick gb/us instead
-    if (countryCode === 'ja') countryCode = 'jp';
-    if (countryCode === 'en') countryCode = ['gb','us'][Math.floor(Math.random()*2)];
-
-    return countryCode.replace(/./g,(ch)=>String.fromCodePoint(0x1f1a5+ch.toUpperCase().charCodeAt()))
-}

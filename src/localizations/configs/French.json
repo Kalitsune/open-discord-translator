@@ -16,6 +16,13 @@
       }
     }
   },
+  "context": {
+    "translate": {
+      "name": "Traduire",
+      "footer": "info: cette fonctionnalité utilise le langage défini dans vos paramètres discord",
+      "noText": "Ce message est vide!"
+    }
+  },
   "common": {
     "options": {
       "text": {
