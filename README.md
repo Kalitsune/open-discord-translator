@@ -9,8 +9,8 @@
 ### Context menu translation
 
 ## Installation
-### Using Docker
-#### Docker compose
+### Using Docker (recommended)
+#### Docker compose (recommended)
 Create a `docker-compose.yml` file and set the environment variables (check the [Environment variables](#environment-variables) section for more information)
 ```yaml
 version: "3.7"
@@ -100,7 +100,7 @@ to invite the bot, use the link printed in the console
 |---------------|---------------------------------------------------------------------------------------|
 | `google`      | The google translation API for free, the threshold might be low                       |
 | `paid_google` | The google translation API, you need to set the `GOOGLE_API_KEY` environment variable |
-| `deepl`       | The deepl translation API, you need to set the `DEEPL_AUTH_KEY` environment variable  |
+| `deepl`       | The deepl translation API, you need to set the `DEEPL_API_KEY` environment variable   |
 ### Database API drivers
 | Driver name | Description                                                                        |
 |-------------|------------------------------------------------------------------------------------|
