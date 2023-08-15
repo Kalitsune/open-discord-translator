@@ -9,8 +9,8 @@ jobs:
   build-and-push-docker-image:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: write
+      contents: write # github.com/kalitsune/open-discord-translator/releases
+      packages: write # ghcr.io/kalitsune/open-discord-translator:latest
     env:
       IMAGE_NAME: "open-discord-translator" # can't contain uppercases
     steps:
