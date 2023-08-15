@@ -40,6 +40,7 @@ then start the bot
 ```bash
 docker-compose up -d
 ```
+to invite the bot, use the link printed in the console
 
 #### Docker cli
 ```bash
@@ -60,6 +61,7 @@ docker run -d \
     -v open-discord-translator:/app/database.sqlite \
     ghcr.io/kalitsune/open-discord-translator:latest
 ```
+to invite the bot, use the link printed in the console
 
 ### Using nodejs
 clone the repository and install the dependencies
@@ -76,6 +78,7 @@ then start the bot
 ```bash
 npm start
 ```
+to invite the bot, use the link printed in the console
 
 ### Environment variables
 | Variable                  | Description                                                                                                                                                                            | Default value       |
@@ -121,6 +124,7 @@ then start the bot
 ```bash
 npm run dev
 ```
+to invite the bot, use the link printed in the console
 
 ### Discord api
 the bot is initialized in the `./src/index.js` file,

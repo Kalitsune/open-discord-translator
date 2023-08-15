@@ -7,6 +7,7 @@ module.exports = {
     async execute(client) {
         // check registered commands
         console.log(`Ready! Serving ${client.commands.size} commands as ${client.user.tag}`);
+        console.log(`Invite me using: https://discord.com/api/oauth2/authorize?client_id=${client.application.id}&permissions=2684371968&scope=bot`)
 
         if (process.env.SKIP_COMMAND_VALIDATION) {
             console.log(`[INFO] commands validity check skipped.`);
