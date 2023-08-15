@@ -25,7 +25,7 @@ services:
       - SKIP_COMMAND_VALIDATION=false # if set to true, the bot will not check if the commands are up to date
       - ACCENT_COLOR=Blurple # the color of the embeds
       - DELETE_BUTTON_TIMEOUT=10 # the time in s before the delete button disappears (leave empty for infinite)
-      - TRANSLATION_API_DRIVER=google # paid_google.js or deepl
+      - TRANSLATION_API_DRIVER=google_search # google_search, google_cloud or deepl
       - SELECTED_LANGUAGES=en,es,fr,de,it,ja,ko,pt,ru,zh-CN,zh-TW,pl,nl,sv,ar,cs,da,fi,el,hi,hu,id,no,la,ro # the languages you want to translate to and from (comma separated)
       - GOOGLE_API_KEY= # your google API key (paid google driver)
       - DEEPL_API_KEY= # your deepl auth key (deepl driver)
@@ -52,7 +52,7 @@ docker run -d \
     -e SKIP_COMMAND_VALIDATION=false \
     -e ACCENT_COLOR=Blurple \
     -e DELETE_BUTTON_TIMEOUT=10 \
-    -e TRANSLATION_API_DRIVER=google \
+    -e TRANSLATION_API_DRIVER=google_search \
     -e SELECTED_LANGUAGES=en,es,fr,de,it,ja,ko,pt,ru,zh-CN,zh-TW,pl,nl,sv,ar,cs,da,fi,el,hi,hu,id,no,la,ro \
     -e GOOGLE_API_KEY= \
     -e DEEPL_API_KEY= \
@@ -96,11 +96,11 @@ to invite the bot, use the link printed in the console
 | `SQLITE_PATH`             | The path to the sqlite database file, only needed if you use the [sqlite database driver](#database-api-drivers)                                                                       | `./database.sqlite` |
 
 ### Translation API drivers
-| Driver name   | Description                                                                           |
-|---------------|---------------------------------------------------------------------------------------|
-| `google`      | The google translation API for free, the threshold might be low                       |
-| `paid_google` | The google translation API, you need to set the `GOOGLE_API_KEY` environment variable |
-| `deepl`       | The deepl translation API, you need to set the `DEEPL_API_KEY` environment variable   |
+| Driver name     | Description                                                                           |
+|-----------------|---------------------------------------------------------------------------------------|
+| `google_search` | The google translation API for free, the threshold might be low                       |
+| `google_cloud`  | The google translation API, you need to set the `GOOGLE_API_KEY` environment variable |
+| `deepl`         | The deepl translation API, you need to set the `DEEPL_API_KEY` environment variable   |
 ### Database API drivers
 | Driver name | Description                                                                        |
 |-------------|------------------------------------------------------------------------------------|

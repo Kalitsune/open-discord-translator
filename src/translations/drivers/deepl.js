@@ -1,5 +1,5 @@
 const {Translator, TooManyRequestsError, QuotaExceededError} = require('deepl-node');
-const googleTranslate = require('./google.js');
+const googleTranslate = require('./google_search.js');
 
 let translator;
 module.exports = {
