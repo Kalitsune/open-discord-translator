@@ -14,7 +14,7 @@ module.exports = {
 
     async execute(interaction) {
         if (!interaction.targetMessage.content) {
-            await interaction.reply({ content: getLocalization("context:translate.noText", interaction.locale), ephemeral: true});
+            await interaction.reply({ content: getLocalization("common:errors.noText", interaction.locale), ephemeral: true});
             // wait 5 seconds and delete the message
             return setTimeout(() => {
                 return interaction.deleteReply();

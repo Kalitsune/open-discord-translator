@@ -104,11 +104,11 @@ module.exports = {
             await response.awaitMessageComponent({ filter: collectorFilter, time: process.env.DELETE_BUTTON_TIMEOUT*1000 });
             //delete the webhook message
             for (let i = 0; i < sentMessages.length; i++) {
-                sentMessages[i].delete();
+                webhook.deleteMessage(sentMessages[i].id);
             }
         } catch (e) {
-            if (e instanceof DiscordjsErrorCodes.InteractionCollectorError) {
-                console.log(e);
+            if (!(e instanceof DiscordjsErrorCodes.InteractionCollectorError)) {
+                throw e;
             }
         }
         //remove the delete message

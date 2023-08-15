@@ -19,8 +19,7 @@
   "context": {
     "translate": {
       "name": "Translate",
-      "footer": "pro tip: this feature uses the language defined in your discord settings.",
-      "noText": "This message is empty!"
+      "footer": "pro tip: this feature uses the language defined in your discord settings."
     }
   },
   "common": {
@@ -37,6 +36,10 @@
         "name": "from",
         "description": "The language to translate from."
       }
+    },
+    "errors": {
+      "noText": "This message is empty!",
+      "missingPermission": "oops! I don't have permission to do that, please check that you've used the correct invite link!"
     }
   }
 }

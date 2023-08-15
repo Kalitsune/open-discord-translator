@@ -19,8 +19,7 @@
   "context": {
     "translate": {
       "name": "Traduire",
-      "footer": "info: cette fonctionnalité utilise le langage défini dans vos paramètres discord",
-      "noText": "Ce message est vide!"
+      "footer": "info: cette fonctionnalité utilise le langage défini dans vos paramètres discord"
     }
   },
   "common": {
@@ -37,6 +36,10 @@
         "name": "depuis",
         "description": "La langue du message."
       }
+    },
+    "errors": {
+      "noText": "Ce message est vide !",
+      "missingPermission": "oups! Je n'ai pas la permission de faire ça ! Veuillez vérifier que vous avez utilisé le bon lien d'invitation."
     }
   }
 }
