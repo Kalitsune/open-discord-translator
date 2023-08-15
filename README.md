@@ -10,6 +10,56 @@
 
 ## Installation
 ### Using Docker
+#### Docker compose
+Create a `docker-compose.yml` file and set the environment variables (check the [Environment variables](#environment-variables) section for more information)
+```yaml
+version: "3.7"
+services:
+  open-discord-translator:
+    container_name: open-discord-translator
+    image: ghcr.io/kalitsune/open-discord-translator:latest
+    restart: always
+    environment:
+      - TOKEN=[your token here] # https://discord.com/developers/applications
+      - GUILD= # if set, the commands will only be available in this guild whose ID is linked here
+      - SKIP_COMMAND_VALIDATION=false # if set to true, the bot will not check if the commands are up to date
+      - ACCENT_COLOR=Blurple # the color of the embeds
+      - DELETE_BUTTON_TIMEOUT=10 # the time in s before the delete button disappears (leave empty for infinite)
+      - TRANSLATION_API_DRIVER=google # paid_google.js or deepl
+      - SELECTED_LANGUAGES=en,es,fr,de,it,ja,ko,pt,ru,zh-CN,zh-TW,pl,nl,sv,ar,cs,da,fi,el,hi,hu,id,no,la,ro # the languages you want to translate to and from (comma separated)
+      - GOOGLE_API_KEY= # your google API key (paid google driver)
+      - DEEPL_API_KEY= # your deepl auth key (deepl driver)
+      - DATABASE_PATH=database.sqlite # the path to the database file
+      - DATABASE_DRIVER=sqlite # sqlite is the only driver supported for now but feel free to add more
+    volumes:
+      - open-discord-translator:/app/database.sqlite
+volumes:
+  open-discord-translator:
+```
+then start the bot
+```bash
+docker-compose up -d
+```
+
+#### Docker cli
+```bash
+docker volume create open-discord-translator
+docker run -d \
+    --name open-discord-translator \
+    -e TOKEN=[your token here] \
+    -e GUILD= \
+    -e SKIP_COMMAND_VALIDATION=false \
+    -e ACCENT_COLOR=Blurple \
+    -e DELETE_BUTTON_TIMEOUT=10 \
+    -e TRANSLATION_API_DRIVER=google \
+    -e SELECTED_LANGUAGES=en,es,fr,de,it,ja,ko,pt,ru,zh-CN,zh-TW,pl,nl,sv,ar,cs,da,fi,el,hi,hu,id,no,la,ro \
+    -e GOOGLE_API_KEY= \
+    -e DEEPL_API_KEY= \
+    -e DATABASE_PATH=database.sqlite \
+    -e DATABASE_DRIVER=sqlite \
+    -v open-discord-translator:/app/database.sqlite \
+    ghcr.io/kalitsune/open-discord-translator:latest
+```
 
 ### Using nodejs
 clone the repository and install the dependencies

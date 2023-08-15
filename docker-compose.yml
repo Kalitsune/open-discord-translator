@@ -2,7 +2,7 @@ version: "3.7"
 services:
   open-discord-translator:
     container_name: open-discord-translator
-    image: ghcr.io/kalitsune/open-discord-translator
+    image: ghcr.io/kalitsune/open-discord-translator:latest
     build: .
     restart: always
     environment:
@@ -17,3 +17,7 @@ services:
       - DEEPL_API_KEY= # your deepl auth key (deepl driver)
       - DATABASE_PATH=database.sqlite # the path to the database file
       - DATABASE_DRIVER=sqlite # sqlite is the only driver supported for now but feel free to add more
+    volumes:
+      - open-discord-translator:/app/database.sqlite
+volumes:
+    open-discord-translator:
