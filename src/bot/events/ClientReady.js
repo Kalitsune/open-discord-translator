@@ -1,7 +1,7 @@
 //ClientReady event
 const { Events } = require('discord.js');
 const { deployCommands } = require('../interactions/deploy.js');
-
+let verbose = false;
 module.exports = {
     name: Events.ClientReady,
     async execute(client) {
@@ -45,7 +45,7 @@ async function fetchVars(client) {
 function checkJSONEquality(command1, command2) {
     for (const key in command1) {
         // array check
-        if ((Array.isArray(command1[key]))) {
+        if (((command1[key]) ^ (command2[key])) || (Array.isArray(command1[key]))) {
             for (let i = 0 ; i < command1[key].length; i += 1) {
                 //check if the array is the same length
                 if (command1[key] && !command2[key] || !command1[key] && command2[key] || command1[key].length !== command2[key].length) {
@@ -64,7 +64,7 @@ function checkJSONEquality(command1, command2) {
             if (key.toLowerCase().includes("local")) return true;
 
             //check if there is an object in command2
-            if (typeof command2[key] !== 'object' || ((command1[key]) ^ (command2[key]))) {
+            if (((command1[key]) ^ (command2[key])) || typeof command2[key] !== 'object') {
                 console.log(`[WARNING] commands validity check failed: found ${command1?.name}/${[key]}:OBJECT instead of ${command2?.name}/${[key]}:OBJECT.`);
                 return false;
             } else {
@@ -73,7 +73,7 @@ function checkJSONEquality(command1, command2) {
                 return checkJSONEquality(command1[key], command2[key])
             }
         // other check
-        } else if ((typeof command1[key] === 'string' ? (command1[key].trim()) : (command1[key] || false)) !== (command2[key] || false)) {
+        } else if (((command1[key]) ^ (command2[key])) || ((typeof command1[key] === 'string' ? (command1[key].trim()) : command1[key]) !== command2[key])) {
             console.log(`[WARNING] commands validity check failed: found ${command1?.name}/${[key]}:"${command1?.key}" instead of ${command2?.name}/${[key]}:"${command2?.key}".`);
             return false;
         }
@@ -122,6 +122,7 @@ async function checkCommandValidity(client) {
     //check if every command in the commands folder match the registered commands
     for (let command of commands) {
         command = client.commands.get(command).data.toJSON();
+        verbose = command.name === "replicas";
         const registeredCommand = registeredCommandsCache.find(c => c.name === command.name);
         if (!checkJSONEquality(command, registeredCommand)) {
             await deployCommands(client.application.id, client.commands.map(c => c.data.toJSON()));
