@@ -10,8 +10,8 @@ module.exports = {
         // edit the command
         const command = client.commands.get('translate');
         // transform the sources/targets into choices {name, value}
-        languages.forEach(choice => command.data.options[1].addChoices(choice));
-        languages.forEach(choice => command.data.options[2].addChoices(choice));
+        command.data.options[1].addChoices(languages)
+        command.data.options[2].addChoices(languages)
     },
     data: new SlashCommandBuilder()
         .setName('translate').setDescription("Translate text to another language.")
