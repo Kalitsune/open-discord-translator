@@ -1,4 +1,4 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 const { getKeyLocalizations } = require('../../../localizations/localizations.js');
 const { makeResponseEmbeds } = require('../../../utils');
@@ -10,8 +10,8 @@ module.exports = {
         // edit the command
         const command = client.commands.get('translate');
         // transform the sources/targets into choices {name, value}
-        command.data.options[1].addChoices(languages)
-        command.data.options[2].addChoices(languages)
+        command.data.options[1].choices = languages
+        command.data.options[2].choices = languages
     },
     data: new SlashCommandBuilder()
         .setName('translate').setDescription("Translate text to another language.")

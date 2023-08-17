@@ -11,8 +11,8 @@ module.exports = {
         // edit the command
         const command = client.commands.get('send');
         // transform the sources/targets into choices {name, value}
-        command.data.options[1].addChoices(languages)
-        command.data.options[2].addChoices(languages)
+        command.data.options[1].choices = languages
+        command.data.options[2].choices = languages
     },
     data: new SlashCommandBuilder()
         .setName('send').setDescription("Directly send text in another language under your name.")
