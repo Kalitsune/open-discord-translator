@@ -16,7 +16,7 @@ async function main() {
     GatewayIntentBits.Guilds,
   ];
 
-  if (process.env.ENABLE_REPLICAS) intents.push(GatewayIntentBits.MessageContent) // replicas need the message content intent
+  if (process.env.ENABLE_REPLICAS) intents.push(GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages) // replicas need the message content intent
 
   // init discord.js
   const client = new Client({intents});
@@ -44,10 +44,8 @@ async function main() {
   client.languages = client.languages.filter(lang => lang !== undefined);
   client.translate = api.translate;
 
-  // init the database
+  // init the database and add it to the client
   await db.init();
-  //load the replica channels and add the db to the client
-  client.replicaChannels = await db.getReplicaChannels();
   client.db = db;
 
   // init commands
@@ -82,6 +80,7 @@ async function main() {
     // Set a new item in the Collection with the key as the command name and the value as the exported module
     if ('name' in event && 'execute' in event) {
       client.on(event.name, event.execute)
+      if ('init' in event) event.init(client);
     } else {
       console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
     }

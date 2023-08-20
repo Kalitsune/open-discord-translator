@@ -7,21 +7,23 @@ const { errBadRequest } = require('../../errors');
 let database = null;
 let databaseRun = null;
 let databaseAll = null;
+let databaseGet = null;
 module.exports = {
     async init() {
         //check if SQLITE_PATH is set
         if (process.env.SQLITE_PATH) {
             // load the database
-            database = new sqlite.Database(process.env.SQLITE_PATH);
+            database = new sqlite.cached.Database(process.env.SQLITE_PATH);
         } else {
             // use in memory database
             console.warn('[WARNING] SQLITE_PATH not set, the database will be wiped on restart');
-            database = new sqlite.Database(':memory:');
+            database = new sqlite.cached.Database(':memory:');
         }
 
         // define the database functions do be async
         databaseRun = util.promisify(database.run.bind(database));
         databaseAll = util.promisify(database.all.bind(database));
+        databaseGet = util.promisify(database.get.bind(database));
 
         // create the tables if they don't exist
 
@@ -48,6 +50,10 @@ module.exports = {
     async getGuildReplicaChannels(guildId) {
         // get all the channels to be replicated in a guild
         return await databaseAll(`SELECT * FROM replica_channels WHERE guild_id = ?`, [guildId]);
+    },
+    async getReplicaChannel(sourceChannelId, targetChannelId, targetLanguageCode) {
+        // get a specific channel to be replicated
+        return await databaseGet(`SELECT * FROM replica_channels WHERE source_channel_id = ? AND target_channel_id = ? AND target_language_code= ?`, [sourceChannelId, targetChannelId, targetLanguageCode]);
     },
     async removeReplicaChannel(sourceChannelId, targetChannelId, targetLanguageCode) {
         // remove a channel from the replication list

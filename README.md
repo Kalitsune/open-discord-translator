@@ -192,7 +192,10 @@ module.exports = {
     async getGuildReplicaChannels(guildId) {
         // get all the channels to be replicated in a guild
     },
-    async removeReplicaChannel(sourceChannelId, targetChannelId, targetLanguageCode) {
+    async getReplicaChannel(sourceChannelId, targetChannelId, targetLanguageCode) {
+        // get a specific channel to be replicated
+    },
+        async removeReplicaChannel(sourceChannelId, targetChannelId, targetLanguageCode) {
         // remove a channel from the replication list
     },
 }

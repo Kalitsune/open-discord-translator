@@ -104,15 +104,11 @@ async function add(interaction) {
     try {
         await interaction.client.db.addReplicaChannel(sourceChannel.guild.id, sourceChannel.id, targetChannel.id, languageCode);
     } catch (e) {
-        console.log(e);
         // catch sqlite3 primary key constraint errors
-        if (e instanceof sqlite.SqliteError && e.code === 'SQLITE_CONSTRAINT') {
-
+        if (e.code === 'SQLITE_CONSTRAINT') {
+            return interaction.reply({content: getLocalization("commands:replicas.sub.add.errors.alreadyExists", interaction.locale), ephemeral: true});
         }
     }
-
-    // update the replicas in the client
-    interaction.client.replicas = await interaction.client.db.getReplicaChannels();
 
     // reply to the interaction
     const responseEmbed = new EmbedBuilder()
@@ -134,7 +130,7 @@ async function list(interaction) {
         // reply to the interaction
         const responseEmbed = new EmbedBuilder()
             .setColor(process.env.ACCENT_COLOR)
-            .setDescription(getLocalization("commands:replicas.sub.list.noReplicas", interaction.locale, {
+            .setDescription(getLocalization("commands:replicas.sub.list.errors.noReplicas", interaction.locale, {
                 name: `${interaction.command.name} ${module.exports.data.options[0].name}`,
                 id: interaction.command.id
             }));
@@ -194,11 +190,20 @@ async function remove(interaction) {
     // get the language code
     const languageCode = interaction.options.getString('language');
 
+    //check if the replica exists
+    if(!await interaction.client.db.getReplicaChannel(sourceChannel.id, targetChannel.id, languageCode)) {
+        // reply to the interaction
+        const responseEmbed = new EmbedBuilder()
+            .setColor(process.env.ACCENT_COLOR)
+            .setDescription(getLocalization("commands:replicas.sub.remove.errors.notFound", interaction.locale, {
+                name: `${interaction.command.name} ${module.exports.data.options[2].name}`,
+                id: interaction.command.id
+            }));
+        return await interaction.reply({embeds: [responseEmbed], ephemeral: true});
+    }
+
     // remove the replica channel from the db
     await interaction.client.db.removeReplicaChannel(sourceChannel.id, targetChannel.id, languageCode);
-
-    // update the replicas in the client
-    interaction.client.replicas = await interaction.client.db.getReplicaChannels();
 
     // reply to the interaction
     const responseEmbed = new EmbedBuilder()
