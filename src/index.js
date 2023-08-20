@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path');
 require('dotenv').config({path: fs.existsSync('.env.dev') ? '.env.dev' : '.env'}); // init dotenv to use .env.dev instead of .env if it exists
 
-const { Client, Events, Collection, GatewayIntentBits} = require('discord.js');
+const { Client, Collection, GatewayIntentBits} = require('discord.js');
 
 const api = require('./translations/translations.js');
 
