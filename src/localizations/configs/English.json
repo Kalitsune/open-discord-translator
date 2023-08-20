@@ -54,7 +54,6 @@
           "name": "list",
           "description": "List all replicas.",
           "title": "Replicas:",
-          "listItem": "${number}.  \uD83C\uDF10 <#${source}> → ${language} <#${target}>",
           "errors": {
             "noReplicas": "There are no replicas. Get started with </${name}:${id}>!"
           }

@@ -156,14 +156,8 @@ async function list(interaction) {
         const sourceChannel = interaction.client.channels.cache.get(replica.source_channel_id);
         const targetChannel = interaction.client.channels.cache.get(replica.target_channel_id);
 
-        // add a formated text to the description
-        description += getLocalization("commands:replicas.sub.list.listItem", interaction.locale, {
-            number: i,
-            source: sourceChannel.id,
-            language: getFlagEmoji(replica.target_language_code),
-            target: targetChannel.id
-        });
-        description += "\n";
+        // add a formatted text to the description
+        description += `${i}.  \uD83C\uDF10 <#${sourceChannel.id}> → ${getFlagEmoji(replica.target_language_code)} <#${targetChannel.id}>\n`
 
         // increment the number
         i++;
