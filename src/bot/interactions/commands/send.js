@@ -107,7 +107,7 @@ module.exports = {
                 webhook.deleteMessage(sentMessages[i].id);
             }
         } catch (e) {
-            if (!(e instanceof DiscordjsErrorCodes.InteractionCollectorError)) {
+            if (e.code !== DiscordjsErrorCodes.InteractionCollectorError) {
                 throw e;
             }
         }
