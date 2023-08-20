@@ -1,5 +1,5 @@
 //InteractionCreate event
-const { Events } = require('discord.js');
+const { Events, EmbedBuilder } = require('discord.js');
 const { getLocalization } = require('../../localizations/localizations.js');
 
 module.exports = {
@@ -18,19 +18,31 @@ module.exports = {
             }
         } catch (error) {
             if (error.code === 50013) {
+                //create the error message
+                const responseEmbed = new EmbedBuilder()
+                    .setColor(process.env.ACCENT_COLOR)
+                    .setDescription(getLocalization("common:errors.missingPermission", interaction.locale));
+
+                //send the error message
                 if (interaction.replied || interaction.deferred) {
-                    await interaction.followUp({ content: getLocalization("common:errors.missingPermission", interaction.locale), ephemeral: true });
+                    await interaction.followUp({ embeds: [responseEmbed], ephemeral: true });
                 } else {
-                    await interaction.reply({ content: getLocalization("common:errors.missingPermission", interaction.locale), ephemeral: true });
+                    await interaction.reply({ embeds: [responseEmbed], ephemeral: true });
                 }
             }
 
-            console.error(error);
+            //create the error message
+            const responseEmbed = new EmbedBuilder()
+                .setColor(process.env.ACCENT_COLOR)
+                .setDescription(getLocalization("common:errors.unknown", interaction.locale));
+
+            //send the error message
             if (interaction.replied || interaction.deferred) {
-                await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+                await interaction.followUp({ embeds: [responseEmbed], ephemeral: true });
             } else {
-                await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+                await interaction.reply({ embeds: [responseEmbed], ephemeral: true });
             }
+            console.error(error);
         }
     }
 }

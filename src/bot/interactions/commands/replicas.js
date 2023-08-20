@@ -97,7 +97,10 @@ async function add(interaction) {
 
     // check if the source and target channels are in the same guild
     if (sourceChannel.guild.id !== targetChannel.guild.id) {
-        await interaction.reply({content: getLocalization("commands:replicas.sub.add.errors.differentGuilds", interaction.locale), ephemeral: true});
+        const responseEmbed = new EmbedBuilder()
+            .setColor(process.env.ACCENT_COLOR)
+            .setDescription(getLocalization("commands:replicas.sub.add.errors.differentGuilds", interaction.locale));
+        return await interaction.reply({embeds: [responseEmbed], ephemeral: true});
     }
 
     // register the replica channel in the db
@@ -106,7 +109,14 @@ async function add(interaction) {
     } catch (e) {
         // catch sqlite3 primary key constraint errors
         if (e.code === 'SQLITE_CONSTRAINT') {
-            return interaction.reply({content: getLocalization("commands:replicas.sub.add.errors.alreadyExists", interaction.locale), ephemeral: true});
+            // reply to the interaction
+            const responseEmbed = new EmbedBuilder()
+                .setColor(process.env.ACCENT_COLOR)
+                .setDescription(getLocalization("commands:replicas.sub.add.errors.alreadyExists", interaction.locale, {
+                    name: `${interaction.command.name} ${module.exports.data.options[2].name}`,
+                    id: interaction.command.id
+                }));
+            return await interaction.reply({embeds: [responseEmbed], ephemeral: true});
         }
     }
 

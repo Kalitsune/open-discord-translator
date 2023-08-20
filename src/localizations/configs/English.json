@@ -35,10 +35,10 @@
       "sub": {
         "add": {
           "name": "add",
-          "description": "Create ,a translation joint between two channels.",
+          "description": "Create a translation joint between two channels.",
           "success": "Created a translation joint: \uD83C\uDF10 <#${source}> → ${language} <#${target}>.",
           "errors": {
-            "alreadyExists": "A translation joint with the same settings already exists.",
+            "alreadyExists": "A translation joint with the same settings already exists. Please check </${name}:${id}>.",
             "differentGuilds": "The source and target channels must be in the same guild."
           }
         },
@@ -85,7 +85,8 @@
     },
     "errors": {
       "noText": "This message is empty!",
-      "missingPermission": "oops! I don't have permission to do that, please check that you've used the correct invite link!"
+      "missingPermission": "oops! I don't have permission to do that, please check that you've used the correct invite link!",
+      "unknown": "There was an error while executing this command!"
     }
   }
 }
