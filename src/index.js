@@ -61,6 +61,7 @@ async function main() {
     const command = require(filePath);
     // Set a new item in the Collection with the key as the command name and the value as the exported module
     if ('data' in command && 'execute' in command) {
+      if (!process.env.ENABLE_REPLICAS && command.data.name === "replicas") continue; // replicas don't need to be loaded if the ENABLE_REPLICAS env variable is false
       client.commands.set(command.data.name, command);
       if ('init' in command) command.init(client);
     } else {
