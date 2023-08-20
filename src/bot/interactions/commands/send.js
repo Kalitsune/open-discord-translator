@@ -74,14 +74,13 @@ module.exports = {
             }
             return;
         }
-
         // send the message
         let sentMessages = [];
         for (let i = 0; i < messages.length; i++) {
             sentMessages.push(await webhook.send({
                 content: messages[i],
-                username: interaction.user.username,
-                avatarURL: interaction.user.displayAvatarURL({format: 'png', dynamic: true}),
+                username: interaction.member.nickname || interaction.user.globalName,
+                avatarURL: interaction.member.displayAvatarURL({format: 'png', dynamic: true}),
                 threadId: isThread ? interaction.channel.id : null
             }));
         }
