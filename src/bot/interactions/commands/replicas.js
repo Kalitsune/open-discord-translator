@@ -5,11 +5,10 @@
 // the remove subcommand removes a channel from the replication list
 // the list subcommand lists all the channels that are being replicated
 
-const sqlite = require('sqlite3');
 const { SlashCommandBuilder, PermissionFlagsBits, ChannelType, EmbedBuilder } = require('discord.js');
 
 const { getKeyLocalizations, getLocalization } = require('../../../localizations/localizations.js');
-const { getFlagEmoji } = require('../../../utils');
+const { getFlagEmoji, splitString } = require('../../../utils');
 
 module.exports = {
     init(client) {
@@ -171,7 +170,7 @@ async function list(interaction) {
     }
 
     // split the description into chunks
-    const descriptionChunks = description.match(/(.|[\r\n]){1,2048}/g);
+    const descriptionChunks = splitString(description, 2000);
 
     // create the embed
     let responseEmbeds = [];
