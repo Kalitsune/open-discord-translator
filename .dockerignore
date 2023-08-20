@@ -129,3 +129,6 @@ dist
 # jetbrains
 .idea
 *.sqlite
+
+# screenshots and logos
+assets
