@@ -1,7 +1,10 @@
 // imports
 const fs = require('fs')
 const path = require('path');
-require('dotenv').config({path: fs.existsSync('.env.dev') ? '.env.dev' : '.env'}); // init dotenv to use .env.dev instead of .env if it exists
+
+const env = require('dotenv').config({path: fs.existsSync('.env.dev') ? '.env.dev' : '.env'}).parsed;
+process.env = require("dotenv-parse-variables")(env);  // init dotenv to use .env.dev instead of .env if it exists
+process.env.GUILD = env.GUILD
 
 const { Client, Collection, GatewayIntentBits} = require('discord.js');
 
@@ -9,10 +12,14 @@ const api = require('./translations/translations.js');
 const db = require('./db/db.js');
 
 async function main() {
+  let intents = [
+    GatewayIntentBits.Guilds,
+  ];
+
+  if (process.env.ENABLE_REPLICAS) intents.push(GatewayIntentBits.MessageContent) // replicas need the message content intent
+
   // init discord.js
-  const client = new Client({intents: [
-      GatewayIntentBits.Guilds
-  ]});
+  const client = new Client({intents});
   console.log(`[STARTUP] Starting bot...`)
 
   // init the translation API
@@ -21,15 +28,12 @@ async function main() {
   const languages = await api.init();
   // limit the selected languages to the ones in the .env file
   if (process.env.SELECTED_LANGUAGES) {
-    // the .env format is csv so make it an array
-    const selectedLanguages = process.env.SELECTED_LANGUAGES.split(',');
-
     // to keep the SELECTED_LANGUAGES order we need to first parse the languages to easily find them
     const parsedLanguages = {};
     languages.forEach(lang => parsedLanguages[lang.code] = lang);
 
     // then we can filter the languages to keep only the ones in the .env file
-    client.languages = selectedLanguages.map(lang => parsedLanguages[lang]);
+    client.languages = process.env.SELECTED_LANGUAGES.map(lang => parsedLanguages[lang]);
   } else {
     // if no languages are specified in the .env file use all the languages (note: they will be capped at 25)
     client.languages = languages;
