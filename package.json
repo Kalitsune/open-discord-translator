@@ -32,7 +32,8 @@
     "deepl-node": "^1.10.2",
     "discord-api-types": "^0.37.53",
     "discord.js": "^14.12.1",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

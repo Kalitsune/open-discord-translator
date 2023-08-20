@@ -1,6 +1,8 @@
 # open discord translator
- An open source discord bot using the latest discord integration features and supporting multiple translation backend
+An open source discord bot using the latest discord integration features and supporting multiple translation backend
 
+NOTE: this bot has been designed for a very limited amount of guild because of the translation APIs quota limitations,
+as such, it is not recommended to use it on a large scale.
 ## Features
 ### Translation Command
 
@@ -181,12 +183,15 @@ module.exports = {
         // feel free to add more environment variables if needed (don't forget to update the readme)
     },
     async addReplicaChannels(guildId, sourceChannelId, targetChannelId, targetLanguageCode) {
-        // add a channel to be replicated in another languages
+        // add a channel to be replicated in another language
     },
-    async getReplicaChannels(guildID) {
+    async getReplicaChannels() {
         // get all the channels to be replicated
     },
-    async removeReplicaChannel(sourceChannelId, targetChannelId) {
+    async getGuildReplicaChannels(guildId) {
+        // get all the channels to be replicated in a guild
+    },
+    async removeReplicaChannel(sourceChannelId, targetChannelId, targetLanguageCode) {
         // remove a channel from the replication list
     },
 }

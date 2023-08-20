@@ -8,7 +8,7 @@ const driverFile = path.join(__dirname ,`drivers/${process.env.TRANSLATION_API_D
 if (!fs.existsSync(driverFile)) {
     console.error(`[FATAL] The translation api driver "${process.env.TRANSLATION_API_DRIVER}" does not exists.`);
     console.error(`[FATAL] Please check that the TRANSLATION_API_DRIVER env variable is properly set or add a driver.`);
-    console.error(`[FATAL] Check the README.md for more informations.`);
+    console.error(`[FATAL] Check the README.md for more information.`);
     process.exit(1);
 }
 
@@ -17,8 +17,8 @@ const requiredMethods = ['init', 'translate'];
 const driver = require(driverFile);
 for (const method of requiredMethods) {
     if (!(method in driver)) {
-        console.error(`[FATAL] The translation api driver "${process.env.TRANSLATION_API_DRIVER}" does not contains a ${method} method.`);
-        console.error(`[FATAL] Please check that the TRANSLATION_API_DRIVER env variable is properly set or add a driver.`);
+        console.error(`[FATAL] The translation api driver "${process.env.TRANSLATION_API_DRIVER}" is missing a ${method} method.`);
+        console.error(`[FATAL] The driver is required to have the following methods: ${requiredMethods.join(', ')}.`);
         console.error(`[FATAL] Check the README.md for more information.`);
         process.exit(1);
     }

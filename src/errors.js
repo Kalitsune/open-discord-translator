@@ -41,4 +41,4 @@ class errUnknown extends Error {
     }
 }
 
-module.exports = {errUnauthorized, errBadRequest, errMaxQuota, errRateLimit, errInternal, errUnknown}
+module.exports = {errUnauthorized, errBadRequest, errMaxQuota, errRateLimit, errInternal, errUnknown, }

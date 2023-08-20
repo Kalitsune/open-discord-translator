@@ -6,6 +6,7 @@ require('dotenv').config({path: fs.existsSync('.env.dev') ? '.env.dev' : '.env'}
 const { Client, Collection, GatewayIntentBits} = require('discord.js');
 
 const api = require('./translations/translations.js');
+const db = require('./db/db.js');
 
 async function main() {
   // init discord.js
@@ -38,6 +39,12 @@ async function main() {
   // filter undefined lanugages
   client.languages = client.languages.filter(lang => lang !== undefined);
   client.translate = api.translate;
+
+  // init the database
+  await db.init();
+  //load the replica channels and add the db to the client
+  client.replicaChannels = await db.getReplicaChannels();
+  client.db = db;
 
   // init commands
   client.commands = new Collection();

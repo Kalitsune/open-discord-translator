@@ -9,10 +9,51 @@
       "name": "send",
       "description": "Directly send text in another language.",
       "success": {
-        "title":  "Sent!",
+        "title": "Sent!",
         "description": "Check it out: ${url}",
         "footer": "[this message will disappear in ${time}s...]",
         "delete": "Delete"
+      }
+    },
+    "replicas": {
+      "name": "replicas",
+      "description": "Manage replicas.",
+      "options": {
+        "source": {
+          "name": "source",
+          "description": "The channel whose messages will be translated."
+        },
+        "target": {
+          "name": "target",
+          "description": "The channel where the translated messages should be sent."
+        },
+        "language": {
+          "name": "language",
+          "description": "The language to translate to."
+        }
+      },
+      "sub": {
+        "add": {
+          "name": "add",
+          "description": "Create ,a translation join between two channels.",
+          "success": "Created a translation join: \uD83C\uDF10 <#${source}> → ${language} <#${target}>.",
+          "errors": {
+            "alreadyExists": "A translation join with the same settings already exists.",
+            "differentGuilds": "The source and target channels must be in the same guild."
+          }
+        },
+        "remove": {
+          "name": "remove",
+          "description": "Remove a replica.",
+            "success": "Removed the translation join: \uD83C\uDF10 <#${source}> → ${language} <#${target}>."
+        },
+        "list": {
+          "name": "list",
+          "description": "List all replicas.",
+          "title": "Replicas:",
+          "listItem": "${number}.  \uD83C\uDF10 <#${source}> → ${language} <#${target}>",
+          "noReplicas": "There are no replicas. Get started with </${name}:${id}>!"
+        }
       }
     }
   },
