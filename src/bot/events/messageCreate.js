@@ -21,6 +21,10 @@ async function replicaHandler(message, replicaChannel) {
     // translate the message
     const translated = await message.client.translate(message.content, replicaChannel.target_language_code);
 
+    // if the source and target channels are equals, check if the message is the same as the original or if it's coming from the same language
+    if (replicaChannel.source_channel_id === replicaChannel.target_channel_id && (translated.text === message.content || translated.from === replicaChannel.target_language_code)) return;
+
+    // split the message into multiple messages if it's too long
     const messages = splitString(translated.text, 2000);
 
     // if possible use webhooks, otherwise use the bot
