@@ -7,10 +7,45 @@ NOTE: this bot has been designed for a very limited amount of guild because of t
 as such, it is not recommended to use it on a large scale.
 ## Features
 ### Translation Command
+Translate a message to another language using the `/translate` command without leaving discord
+![assets/translate_command.png](assets/demos/translate_command.png)
 
 ### Directly send the translated message
+Write a message in a language for it to be sent in another language using the `/send` command
+![assets/send_command.png](assets/demos/send_command.png)
+**note:** because the bot is using webhooks normal users cannot delete their message,
+as such, a delete button is provided to the user if the translation doesn't seem right.
 
 ### Context menu translation
+To quickly translate a message to your language, just right click on it then do `apps > translate`
+![assets/context_menu.png](assets/demos/context_command.png)
+It'll automatically detect the input language and translate it to the language set in your discord settings
+
+### Replicas
+Replicas are translation joints between two channels, 
+however as they require the bot to have the privileged intent `READ_MESSAGE_CONTENT` to work, they are disabled by default.
+
+For example, a message in #channel-1...
+![assets/replicas_source.png](assets/demos/replicas_source.png)
+
+...will be translated to spanish and be sent to #channel-2
+![assets/replicas_target.png](assets/demos/replicas_target.png)
+
+or a #international channel can automatically provide a copy of the message in english
+![assets/replicas_channel.png](assets/demos/replicas_channel.png)
+_in this scenario, messages that are already into the target language won't get translated_
+
+#### Managing replicas
+Replicas are managed using the `/replicas` command
+
+Use `/replicas add` to add a new replica
+![assets/replicas_add_command.png](assets/demos/replicas_add_command.png)
+
+Use `/replicas list` to list all the replicas
+![assets/replicas_list_command.png](assets/demos/replicas_list_command.png)
+
+Use `/replicas remove` to remove a replica
+![assets/replicas_remove_command.png](assets/demos/replicas_remove_command.png)
 
 ## Installation
 ### Using Docker (recommended)
@@ -148,7 +183,7 @@ This is really easy to do but it will require you to have a GitHub account. If y
 
 Just click on the "[Fork](https://github.com/Kalitsune/open-discord-translator/fork)" button at the top right of the repository page and you're done!
 
-[![Fork button](assets/ForkButtonScreenshot.png)](https://github.com/Kalitsune/open-discord-translator/fork)
+[![Fork button](assets/demos/ForkButtonScreenshot.png)](https://github.com/Kalitsune/open-discord-translator/fork)
 
 #### 2. Edit the localization files
 The localization files are located in the `./src/localization/configs` directory.
@@ -165,7 +200,7 @@ Tips:
 Once you are done with your changes, you can commit them to your forked repository.
 
 If you're using the github UI, you can commit directly from the browser.
-![Commit button](assets/CommitButtonScreenshot.png)
+![Commit button](assets/demos/CommitButtonScreenshot.png)
 
 #### 4. Create a pull request
 Once you have committed your changes, you can create a pull request to the main repository.
