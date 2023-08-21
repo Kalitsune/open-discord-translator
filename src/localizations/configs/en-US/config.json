@@ -36,7 +36,7 @@
         "add": {
           "name": "add",
           "description": "Create a translation joint between two channels.",
-          "success": "Created a translation joint: 🌐 <#${source}> → ${language} <#${target}>.",
+          "success": "Created a translation joint: \uD83C\uDF10 <#${source}> → ${language} <#${target}>.",
           "errors": {
             "alreadyExists": "A translation joint with the same settings already exists. Please check </${name}:${id}>.",
             "differentGuilds": "The source and target channels must be in the same guild."
@@ -45,10 +45,10 @@
         "remove": {
           "name": "remove",
           "description": "Remove a replica.",
-          "success": "Removed the translation joint: 🌐 <#${source}> → ${language} <#${target}>.",
-          "errors": {
-            "notFound": "There is no active translation joint with the current settings. Please check </${name}:${id}>."
-          }
+            "success": "Removed the translation joint: \uD83C\uDF10 <#${source}> → ${language} <#${target}>.",
+            "errors": {
+              "notFound": "There is no active translation joint with the current settings. Please check </${name}:${id}>."
+            }
         },
         "list": {
           "name": "list",
@@ -70,7 +70,7 @@
   "common": {
     "options": {
       "text": {
-        "name": "text",
+        "name" : "text",
         "description": "The text to translate."
       },
       "to": {
