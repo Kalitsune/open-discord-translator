@@ -12,7 +12,9 @@ const vm = require('vm');
 module.exports = {
     getLocalization(key, locale, data = undefined) {
         // normalize localization
-        locale = localeTable[locale] || locale;
+        if (locale === "en-GB") {
+            locale = "en-US";
+        }
 
         // parse the key
         const domain = key.split(':');
@@ -64,12 +66,12 @@ module.exports = {
         let l;
         for (const localization of localizations) {
             l = module.exports.getLocalization(key, localization);
-            if (localization === 'English') {
-                localizationsValues["EnglishUS"] = l;
-                localizationsValues["EnglishGB"] = l;
-            } else {
-                localizationsValues[localization] = l;
+            if (localization === 'en') {
+                localizationsValues["en-US"] = l;
+                localizationsValues["en-GB"] = l;
             }
+
+            localizationsValues[localization] = l;
         }
         return localizationsValues;
     },
@@ -81,37 +83,4 @@ function eval(string, data) {
     } else {
         return vm.runInNewContext(`\`${string}\``, data);
     }
-}
-
-const localeTable = {
-    "bg": "Bulgarian",
-    "zh-CN": "ChineseCN",
-    "zh-TW": "ChineseTW",
-    "hr": "Croatian",
-    "cs": "Czech",
-    "da": "Danish",
-    "nl": "Dutch",
-    "en-US": "English",
-    "en-GB": "English",
-    "fi": "Finnish",
-    "fr": "French",
-    "de": "German",
-    "el": "Greek",
-    "hi": "Hindi",
-    "hu": "Hungarian",
-    "it": "Italian",
-    "ja": "Japanese",
-    "ko": "Korean",
-    "lt": "Lithuanian",
-    "no": "Norwegian",
-    "pl": "Polish",
-    "pt-BR": "PortugueseBR",
-    "ro": "Romanian",
-    "ru": "Russian",
-    "es-ES": "Spanish",
-    "sv-SE": "Swedish",
-    "th": "Thai",
-    "tr": "Turkish",
-    "uk": "Ukrainian",
-    "vi": "Vietnamese"
 }
