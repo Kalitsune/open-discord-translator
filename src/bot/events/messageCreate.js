@@ -1,6 +1,6 @@
 //InteractionCreate event
 const { Events } = require('discord.js');
-const {splitString} = require("../../utils");
+const {splitString, getFlagEmoji} = require("../../utils");
 
 
 let sourceChannelIDs = [];
@@ -57,7 +57,7 @@ async function replicaHandler(message, replicaChannel) {
                 embeds: message.embeds,
                 files: message.files,
                 components: message.components,
-                username: message.member?.nickname || message.author.globalName || message.author.username,
+                username: getFlagEmoji(replicaChannel.target_language_code) + " " + (message.member?.nickname || message.author.globalName || message.author.username),
                 avatarURL: message.member?.displayAvatarURL({format: 'png', dynamic: true}) || message.user.avatarURL({format: 'png', dynamic: true}),
             });
         }

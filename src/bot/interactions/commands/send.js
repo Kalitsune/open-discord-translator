@@ -2,7 +2,7 @@ const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, Discordjs
 const { ChannelType} = require('discord-api-types/v10');
 
 const { getKeyLocalizations, getLocalization } = require('../../../localizations/localizations.js');
-const { splitString } = require("../../../utils");
+const { splitString, getFlagEmoji} = require("../../../utils");
 
 module.exports = {
     init (client) {
@@ -79,7 +79,7 @@ module.exports = {
         for (let i = 0; i < messages.length; i++) {
             sentMessages.push(await webhook.send({
                 content: messages[i],
-                username: interaction.member.nickname || interaction.user.globalName,
+                username: getFlagEmoji(to) + " " + (interaction.member.nickname || interaction.user.globalName),
                 avatarURL: interaction.member.displayAvatarURL({format: 'png', dynamic: true}),
                 threadId: isThread ? interaction.channel.id : null
             }));
