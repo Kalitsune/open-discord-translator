@@ -1,61 +1,61 @@
 {
   "commands": {
     "translate": {
-      "name": "translate",
-      "description": "Translate the text to the specified language.",
-      "success": "Translated ${from}  → ${to}"
+      "name": "traduire",
+      "description": "Traduit le texte dans une langue donnée.",
+      "success": "Traduit ${from}  → ${to}"
     },
     "send": {
-      "name": "send",
-      "description": "Directly send text in another language.",
+      "name": "envoyer",
+      "description": "Envoie directement la traduction de votre message.",
       "success": {
-        "title": "Sent!",
-        "description": "Check it out: ${url}",
-        "footer": "[this message will disappear in ${time}s...]",
-        "delete": "Delete"
+        "title": "Envoyé !",
+        "description": "Message: ${url}",
+        "footer": "[Ce message disparaîtra dans ${time}s...]",
+        "delete": "Supprimer"
       }
     },
     "replicas": {
-      "name": "replicas",
-      "description": "Manage replicas.",
+      "name": "réplications",
+      "description": "Gérer les réplications.",
       "options": {
         "source": {
           "name": "source",
-          "description": "The channel whose messages will be translated."
+          "description": "Le salon dont les messages seront traduits."
         },
         "target": {
-          "name": "target",
-          "description": "The channel where the translated messages should be sent."
+          "name": "destination",
+          "description": "Le salon où les messages traduits seront envoyés."
         },
         "language": {
-          "name": "language",
-          "description": "The language to translate to."
+          "name": "langue",
+          "description": "La langue de destination."
         }
       },
       "sub": {
         "add": {
-          "name": "add",
-          "description": "Create a translation joint between two channels.",
-          "success": "Created a translation joint: 🌐 <#${source}> → ${language} <#${target}>.",
+          "name": "ajouter",
+          "description": "Crée une liaison de traduction entre deux salons.",
+          "success": "Liaison de traduction créée: 🌐 <#${source}> → ${language} <#${target}>.",
           "errors": {
-            "alreadyExists": "A translation joint with the same settings already exists. Please check </${name}:${id}>.",
-            "differentGuilds": "The source and target channels must be in the same guild."
+            "alreadyExists": "Un lien de traduction avec les même paramêtres existe déjà! Accédez à la liste des réplications avec </${name}:${id}>.",
+            "differentGuilds": "Le salon source et de destination doivent faire partie du même serveur discord."
           }
         },
         "remove": {
-          "name": "remove",
-          "description": "Remove a replica.",
-          "success": "Removed the translation joint: 🌐 <#${source}> → ${language} <#${target}>.",
+          "name": "retirer",
+          "description": "Supprime une liaison de traduction entre deux salons.",
+          "success": "Liaison de traduction suprimée: 🌐 <#${source}> → ${language} <#${target}>.",
           "errors": {
-            "notFound": "There is no active translation joint with the current settings. Please check </${name}:${id}>."
+            "notFound": "Aucun lien de traduction n'existe avec ces paramètres! Accédez à la liste des réplications avec </${name}:${id}>."
           }
         },
         "list": {
-          "name": "list",
-          "description": "List all replicas.",
-          "title": "Replicas:",
+          "name": "lister",
+          "description": "Affiche tous les liens de traduction actifs sur le serveur.",
+          "title": "Réplications:",
           "errors": {
-            "noReplicas": "There are no replicas. Get started with </${name}:${id}>!"
+            "noReplicas": "Aucun lien de traduction trouvé. Commencez en utilisant </${name}:${id}>!"
           }
         }
       }
@@ -63,29 +63,29 @@
   },
   "context": {
     "translate": {
-      "name": "Translate",
-      "footer": "pro tip: this feature uses the language defined in your discord settings."
+      "name": "Traduire",
+      "footer": "info: cette fonctionnalité utilise le langage défini dans vos paramètres discord"
     }
   },
   "common": {
     "options": {
       "text": {
-        "name": "text",
-        "description": "The text to translate."
+        "name": "message",
+        "description": "Le message à traduire."
       },
       "to": {
-        "name": "to",
-        "description": "The language to translate to."
+        "name": "vers",
+        "description": "La langue dans la quelle traduire le message."
       },
       "from": {
-        "name": "from",
-        "description": "The language to translate from."
+        "name": "depuis",
+        "description": "La langue du message."
       }
     },
     "errors": {
-      "noText": "This message is empty!",
-      "missingPermission": "oops! I don't have permission to do that, please check that you've used the correct invite link!",
-      "unknown": "There was an error while executing this command!"
+      "noText": "Ce message est vide !",
+      "missingPermission": "oups! Je n'ai pas la permission de faire ça ! Veuillez vérifier que vous avez utilisé le bon lien d'invitation.",
+      "unknown": "Une erreur est survenue lors de l'exécution de cette commande!"
     }
   }
 }
