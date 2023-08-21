@@ -11,6 +11,8 @@ const vm = require('vm');
 // https://discord.com/developers/docs/reference#locales
 module.exports = {
     getLocalization(key, locale, data = undefined) {
+        // normalize localization
+        locale = localeTable[locale] || locale;
 
         // parse the key
         const domain = key.split(':');
@@ -19,10 +21,10 @@ module.exports = {
         // load the localizations file
         let translation
         try {
-            translation = require(`./configs/${locale}/config.json`)[domain[0]];
+            translation = require(`./configs/${locale}.json`)[domain[0]];
         } catch (e) {
             console.log(`[WARNING] The localization file for ${locale} does not exist.`);
-            translation = require(`./configs/en-US/config.json`)[domain[0]];
+            translation = require(`./configs/English.json`)[domain[0]];
         }
 
         try {
@@ -34,7 +36,7 @@ module.exports = {
             try {
                 // try to get the translation in english
                 // console.log(`[WARNING] The key ${key} does not exist in the localization file for ${localization}.`);
-                translation = require(`./configs/en-US/config.json`)[domain[0]];
+                translation = require(`./configs/English.json`)[domain[0]];
                 for (const key of keys) {
                     translation = translation[key];
                 }
@@ -49,8 +51,9 @@ module.exports = {
     },
 
     getAvailableLocalizations() {
-        //list every folder name in ./configs
-        return fs.readdirSync(path.join(__dirname, 'configs'));
+        const localizationsPath = path.join(__dirname, 'configs');
+        const localizationsFiles = fs.readdirSync(localizationsPath).filter(file => file.endsWith('.json'));
+        return localizationsFiles.map(file => file.slice(0,-5)); //remove the .json extension
     },
 
     //return an object containing the value of a key in every found localizations
@@ -61,9 +64,9 @@ module.exports = {
         let l;
         for (const localization of localizations) {
             l = module.exports.getLocalization(key, localization);
-            if (localization === 'en-US') {
-                localizationsValues["en-US"] = l;
-                localizationsValues["en-GB"] = l;
+            if (localization === 'English') {
+                localizationsValues["EnglishUS"] = l;
+                localizationsValues["EnglishGB"] = l;
             } else {
                 localizationsValues[localization] = l;
             }
@@ -78,4 +81,37 @@ function eval(string, data) {
     } else {
         return vm.runInNewContext(`\`${string}\``, data);
     }
+}
+
+const localeTable = {
+    "bg": "Bulgarian",
+    "zh-CN": "ChineseCN",
+    "zh-TW": "ChineseTW",
+    "hr": "Croatian",
+    "cs": "Czech",
+    "da": "Danish",
+    "nl": "Dutch",
+    "en-US": "English",
+    "en-GB": "English",
+    "fi": "Finnish",
+    "fr": "French",
+    "de": "German",
+    "el": "Greek",
+    "hi": "Hindi",
+    "hu": "Hungarian",
+    "it": "Italian",
+    "ja": "Japanese",
+    "ko": "Korean",
+    "lt": "Lithuanian",
+    "no": "Norwegian",
+    "pl": "Polish",
+    "pt-BR": "PortugueseBR",
+    "ro": "Romanian",
+    "ru": "Russian",
+    "es-ES": "Spanish",
+    "sv-SE": "Swedish",
+    "th": "Thai",
+    "tr": "Turkish",
+    "uk": "Ukrainian",
+    "vi": "Vietnamese"
 }
