@@ -5,10 +5,18 @@ let verbose = false;
 module.exports = {
     name: Events.ClientReady,
     async execute(client) {
-        // check registered commands
-        console.log(`Ready! Serving ${client.commands.size} commands as ${client.user.tag}`);
         console.log(`Invite me using: https://discord.com/api/oauth2/authorize?client_id=${client.application.id}&permissions=2684371968&scope=bot`)
 
+
+        // if process.env.GUILD is set, check if the bot is in the guild
+        if (process.env.GUILD) {
+            if (!client.guilds.cache.has(process.env.GUILD)) {
+                console.log(`[FATAL] the bot is not in the guild (${process.env.GUILD}), cannot register commands.`);
+                process.exit(1);
+            }
+        }
+
+        // check if the commands are valid
         if (process.env.SKIP_COMMAND_VALIDATION) {
             console.log(`[INFO] commands validity check skipped.`);
         } else {
@@ -17,6 +25,9 @@ module.exports = {
             await checkCommandValidity(client);
             console.log(`[INFO] commands validity check completed.`);
         }
+
+        // Greet the user
+        console.log(`Ready! Serving ${client.commands.size} commands as ${client.user.tag}`);
     }
 }
 
