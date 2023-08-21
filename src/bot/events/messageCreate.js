@@ -39,7 +39,7 @@ async function replicaHandler(message, replicaChannel) {
         });
 
         //check if the message webhookid is the same as the bot's
-        if (message.webhookId === webhook.id) return;
+        if (webhook && message.webhookId === webhook.id) return;
 
         if (!webhook) {
             //create a webhook
@@ -50,6 +50,17 @@ async function replicaHandler(message, replicaChannel) {
             });
         }
 
+        // send the message
+        for (let i = 0; i < messages.length; i++) {
+            await webhook.send({
+                content: messages[i],
+                embeds: message.embeds,
+                files: message.files,
+                components: message.components,
+                username: message.member?.nickname || message.author.globalName || message.author.username,
+                avatarURL: message.member?.displayAvatarURL({format: 'png', dynamic: true}) || message.user.avatarURL({format: 'png', dynamic: true}),
+            });
+        }
     } catch (e) {
         // fallback method
         for (let i = 0; i < messages.length; i++) {
@@ -60,17 +71,5 @@ async function replicaHandler(message, replicaChannel) {
                 components: message.components,
             });
         }
-        return;
-    }
-    // send the message
-    for (let i = 0; i < messages.length; i++) {
-        await webhook.send({
-            content: messages[i],
-            embeds: message.embeds,
-            files: message.files,
-            components: message.components,
-            username: message.member?.nickname || message.user.globalName,
-            avatarURL: message.member?.displayAvatarURL({format: 'png', dynamic: true}) || message.user.avatarURL({format: 'png', dynamic: true}),
-        });
     }
 }
