@@ -156,8 +156,16 @@ async function list(interaction) {
         const sourceChannel = interaction.client.channels.cache.get(replica.source_channel_id);
         const targetChannel = interaction.client.channels.cache.get(replica.target_channel_id);
 
+        // if the source or target channel is not found
+        if (!sourceChannel || !targetChannel) {
+            // remove the replica
+            await interaction.client.db.removeReplicaChannel(replica.source_channel_id, replica.target_channel_id, replica.target_language_code);
+            // skip this replica
+            continue;
+        }
+
         // add a formatted text to the description
-        description += `${i}.  \uD83C\uDF10 <#${sourceChannel.id}> → ${getFlagEmoji(replica.target_language_code)} <#${targetChannel.id}>\n`
+        description += `${i}.  \uD83C\uDF10 <#${replica.source_channel_id}> → ${getFlagEmoji(replica.target_language_code)} <#${replica.target_channel_id}>\n`
 
         // increment the number
         i++;

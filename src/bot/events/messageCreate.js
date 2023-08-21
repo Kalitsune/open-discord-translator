@@ -30,6 +30,13 @@ async function replicaHandler(message, replicaChannel) {
     // if possible use webhooks, otherwise use the bot
     // if the channel is a thread the webhook needs to be created in the parent channel
     const destinationChannel = message.client.channels.cache.get(replicaChannel.target_channel_id) || await message.client.channels.fetch(replicaChannel.target_channel_id);
+
+    // check if the channel exists
+    if (!destinationChannel) {
+        await message.client.db.removeReplicaChannel(replicaChannel.source_channel_id, replicaChannel.target_channel_id, replicaChannel.target_language_code);
+        return;
+    }
+
     let webhook;
     try {
         // send a message using the user name and pfp using webhooks
