@@ -1,3 +1,3 @@
 files:
-  - source: /src/localizations/configs/en-US/config.json
-    translation: /src/localizations/configs/%locale%/%original_file_name%
+  - source: /src/localizations/configs/**.json
+    translation: /src/localizations/configs/%locale%.json
