@@ -1,0 +1,91 @@
+{
+  "commands": {
+    "translate": {
+      "name": "traduire",
+      "description": "Traduit le texte dans une langue donnée.",
+      "success": "Traduit ${from}  → ${to}"
+    },
+    "send": {
+      "name": "envoyer",
+      "description": "Envoie directement la traduction de votre message.",
+      "success": {
+        "title":  "Envoyé !",
+        "description": "Message: ${url}",
+        "footer": "[Ce message disparaîtra dans ${time}s...]",
+        "delete": "Supprimer"
+      }
+    },
+    "replicas": {
+      "name": "réplications",
+      "description": "Gérer les réplications.",
+      "options": {
+        "source": {
+          "name": "source",
+          "description": "Le salon dont les messages seront traduits."
+        },
+        "target": {
+          "name": "destination",
+          "description": "Le salon où les messages traduits seront envoyés."
+        },
+        "language": {
+          "name": "langue",
+          "description": "La langue de destination."
+        }
+      },
+      "sub": {
+        "add": {
+          "name": "ajouter",
+          "description": "Crée une liaison de traduction entre deux salons.",
+          "success": "Liaison de traduction créée: \uD83C\uDF10 <#${source}> → ${language} <#${target}>.",
+          "errors": {
+            "alreadyExists": "Un lien de traduction avec les même paramêtres existe déjà! Accédez à la liste des réplications avec </${name}:${id}>.",
+            "differentGuilds": "Le salon source et de destination doivent faire partie du même serveur discord."
+          }
+        },
+        "remove": {
+          "name": "retirer",
+          "description": "Supprime une liaison de traduction entre deux salons.",
+          "success": "Liaison de traduction suprimée: \uD83C\uDF10 <#${source}> → ${language} <#${target}>.",
+          "errors": {
+            "notFound": "Aucun lien de traduction n'existe avec ces paramètres! Accédez à la liste des réplications avec </${name}:${id}>."
+          }
+        },
+        "list": {
+          "name": "lister",
+          "description": "Affiche tous les liens de traduction actifs sur le serveur.",
+          "title": "Réplications:",
+          "errors": {
+            "noReplicas": "Aucun lien de traduction trouvé. Commencez en utilisant </${name}:${id}>!"
+          }
+        }
+      }
+    }
+  },
+  "context": {
+    "translate": {
+      "name": "Traduire",
+      "footer": "info: cette fonctionnalité utilise le langage défini dans vos paramètres discord"
+    }
+  },
+  "common": {
+    "options": {
+      "text": {
+        "name" : "message",
+        "description": "Le message à traduire."
+      },
+      "to": {
+        "name": "vers",
+        "description": "La langue dans la quelle traduire le message."
+      },
+      "from": {
+        "name": "depuis",
+        "description": "La langue du message."
+      }
+    },
+    "errors": {
+      "noText": "Ce message est vide !",
+      "missingPermission": "oups! Je n'ai pas la permission de faire ça ! Veuillez vérifier que vous avez utilisé le bon lien d'invitation.",
+      "unknown": "Une erreur est survenue lors de l'exécution de cette commande!"
+    }
+  }
+}
