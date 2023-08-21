@@ -1,0 +1,3 @@
+files:
+  - source: /src/localizations/configs/
+    translation: '%original_path%'
