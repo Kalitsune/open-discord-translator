@@ -22,8 +22,7 @@ To quickly translate a message to your language, just right click on it then do 
 It'll automatically detect the input language and translate it to the language set in your discord settings
 
 ### Replicas
-Replicas are translation joints between two channels, 
-however as they require the bot to have the privileged intent `READ_MESSAGE_CONTENT` to work, they are disabled by default.
+Replicas are translation joints between two channels.
 
 For example, a message in #channel-1...
 ![assets/replicas_source.png](assets/demos/replicas_source.png)
@@ -46,6 +45,8 @@ Use `/replicas list` to list all the replicas
 
 Use `/replicas remove` to remove a replica
 ![assets/replicas_remove_command.png](assets/demos/replicas_remove_command.png)
+
+⚠ because replicas require the privileged intent `READ_MESSAGE_CONTENT` to work, they are disabled by default.
 
 ## Installation
 ### Using Docker (recommended)
@@ -142,9 +143,9 @@ to invite the bot, use the link printed in the console
 | `google_cloud`  | The google translation API, you need to set the `GOOGLE_API_KEY` environment variable |
 | `deepl`         | The deepl translation API, you need to set the `DEEPL_API_KEY` environment variable   |
 ### Database API drivers
-| Driver name | Description                                                                        |
-|-------------|------------------------------------------------------------------------------------|
-| `sqlite`    | The sqlite database driver, you need to set the `SQLITE_PATH` environment variable |
+| Driver name | Description                                                                                                                      |
+|-------------|----------------------------------------------------------------------------------------------------------------------------------|
+| `sqlite`    | The sqlite database driver, you need to set the `SQLITE_PATH` environment variable to enable persistence but it is not mandatory |
 
 ## Development 
 ### Setup
