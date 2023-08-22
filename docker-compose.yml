@@ -2,7 +2,6 @@ version: "3.7"
 services:
   open-discord-translator:
     container_name: open-discord-translator
-    image: ghcr.io/kalitsune/open-discord-translator:latest
     build: .
     restart: always
     environment:
@@ -16,9 +15,9 @@ services:
       - SELECTED_LANGUAGES=en,es,fr,de,it,ja,ko,pt,ru,zh-CN,zh-TW,pl,nl,sv,ar,cs,da,fi,el,hi,hu,id,no,la,ro # the languages you want to translate to and from (comma separated)
       - GOOGLE_API_KEY= # your google API key (paid google driver)
       - DEEPL_API_KEY= # your deepl auth key (deepl driver)
-      - SQLITE_PATH=database.sqlite # the path to the database file
+      - SQLITE_PATH=/data/database.sqlite # the path to the database file
       - DATABASE_DRIVER=sqlite # sqlite is the only driver supported for now but feel free to add more
     volumes:
-      - open-discord-translator:/app/database.sqlite
+      - open-discord-translator:/data/
 volumes:
     open-discord-translator:

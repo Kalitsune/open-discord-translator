@@ -132,3 +132,14 @@ dist
 
 # screenshots and logos
 assets
+
+# other deployment methods
+docker-compose.yml
+open-discord-translator.yml
+
+# git
+.gitignore
+.gitattributes
+.gitmodules
+.git
+.github

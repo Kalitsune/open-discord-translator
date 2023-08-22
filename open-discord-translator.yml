@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: odc-sqlite-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Mi # 10Mi should be plenty as the db is currently only used by replica configs
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odc-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: odc-deployment
+  template:
+    metadata:
+      labels:
+        app: odc-deployment
+    spec:
+      containers:
+      - name: odc-deployment
+        image: ghcr.io/kalitsune/open-discord-translator:latest
+        env:
+          - name: TOKEN
+            value: "[your token here]" # https://discord.com/developers/applications
+          - name: GUILD
+            value: "" # if set, the commands will only be available in this guild whose ID is linked here
+          - name: SKIP_COMMAND_VALIDATION
+            value: "false" # if set to true, the bot will not check if the commands are up to date
+          - name: ACCENT_COLOR
+            value: "Blurple" # the color of the embeds
+          - name: DELETE_BUTTON_TIMEOUT
+            value: "10" # the time in s before the delete button disappears (leave empty for infinite)
+          - name: ENABLE_REPLICAS
+            value: "false" # if set to true, the bot will translate channels message as defined in the db by the `/replicas` command ⚠ NEEDS THE MESSAGE_CONTENT PRIVILEGED INTENT ⚠
+          - name: TRANSLATION_API_DRIVER
+            value: "google_search" # google_search google_cloud or deepl
+          - name: SELECTED_LANGUAGES
+            value: "en,es,fr,de,it,ja,ko,pt,ru,zh-CN,zh-TW,pl,nl,sv,ar,cs,da,fi,el,hi,hu,id,no,la,ro" # the languages you want to translate to and from (comma separated)
+          - name: GOOGLE_API_KEY
+            value: "" # your google API key (paid google driver)
+          - name: DEEPL_API_KEY
+            value: "" # your deepl auth key (deepl driver)
+          - name: SQLITE_PATH
+            value: "database.sqlite" # the path to the database file
+          - name: DATABASE_DRIVER
+            value: "sqlite" # sqlite is the only driver supported for now but feel free to add more
+
+        resources:
+          limits:
+            memory: "10Mi"
+            cpu: "50m"
+        volumeMounts:
+          - name: sqlite-volume
+            mountPath: /app/database.sqlite
+      volumes:
+      - name: sqlite-volume
+        persistentVolumeClaim:
+          claimName: odc-sqlite-pvc

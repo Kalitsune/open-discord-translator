@@ -50,37 +50,14 @@ Use `/replicas remove` to remove a replica
 ## Installation
 ### Using Docker (recommended)
 #### Docker compose (recommended)
-Create a `docker-compose.yml` file and set the environment variables (check the [Environment variables](#environment-variables) section for more information)
-```yaml
-version: "3.7"
-services:
-  open-discord-translator:
-    container_name: open-discord-translator
-    image: ghcr.io/kalitsune/open-discord-translator:latest
-    restart: always
-    environment:
-      - TOKEN=[your token here] # https://discord.com/developers/applications
-      - GUILD= # if set, the commands will only be available in this guild whose ID is linked here
-      - SKIP_COMMAND_VALIDATION=false # if set to true, the bot will not check if the commands are up to date
-      - ACCENT_COLOR=Blurple # the color of the embeds
-      - DELETE_BUTTON_TIMEOUT=10 # the time in s before the delete button disappears (leave empty for infinite)
-      - ENABLE_REPLICAS=false # if set to true, the bot will translate channels message as defined in the db by the `/replicas` command ⚠ NEEDS THE MESSAGE_CONTENT PRIVILEGED INTENT ⚠
-      - TRANSLATION_API_DRIVER=google_search # google_search, google_cloud or deepl
-      - SELECTED_LANGUAGES=en,es,fr,de,it,ja,ko,pt,ru,zh-CN,zh-TW,pl,nl,sv,ar,cs,da,fi,el,hi,hu,id,no,la,ro # the languages you want to translate to and from (comma separated)
-      - GOOGLE_API_KEY= # your google API key (paid google driver)
-      - DEEPL_API_KEY= # your deepl auth key (deepl driver)
-      - DATABASE_PATH=database.sqlite # the path to the database file
-      - DATABASE_DRIVER=sqlite # sqlite is the only driver supported for now but feel free to add more
-    volumes:
-      - open-discord-translator:/app/database.sqlite
-volumes:
-  open-discord-translator:
-```
-then start the bot
+Edit the [docker-compose.yml](./docker-compose.yml) file present in this repo and set the environment variables (check the [Environment variables](#environment-variables) section for more information)
+
+then start the bot (tip: you can use the `-d` flag to run it in the background)
 ```bash
-docker-compose up -d
+docker-compose up
 ```
 to invite the bot, use the link printed in the console
+(use `docker-compose logs` to get the link if you started the bot in the background)
 
 #### Docker cli
 ```bash
@@ -103,6 +80,20 @@ docker run -d \
     ghcr.io/kalitsune/open-discord-translator:latest
 ```
 to invite the bot, use the link printed in the console
+
+#### Using kubernetes (experienced users only)
+⚠ the bot has not been designed to be scaled up, as such, if you set more than one replica, the bot may behave unexpectedly.
+
+[Direct deploy](https://github.com/Kalitsune/open-discord-translator/blob/main/open-discord-translator.yml) (you'll still need to setup some environment variables for it to work)
+```bash
+kubectl apply -f https://raw.githubusercontent.com/Kalitsune/open-discord-translator/main/open-discord-translator.yml
+kubectl edit deployment open-discord-translator
+```
+
+Using the [kubernetes deployment file](open-discord-translator.yaml) provided in this repository
+```bash
+kubectl apply -f open-discord-translator.yaml
+```
 
 ### Using nodejs
 clone the repository and install the dependencies
