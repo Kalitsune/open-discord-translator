@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: odc-pvc
+  name: odt-pvc
 spec:
   accessModes:
     - ReadWriteOnce
@@ -12,19 +12,19 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: odc-deployment
+  name: odt-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: odc-deployment
+      app: odt-deployment
   template:
     metadata:
       labels:
-        app: odc-deployment
+        app: odt-deployment
     spec:
       containers:
-      - name: odc-deployment
+      - name: odt-deployment
         image: ghcr.io/kalitsune/open-discord-translator:latest
         env:
           - name: TOKEN
@@ -54,12 +54,12 @@ spec:
 
         resources:
           limits:
-            memory: "10Mi"
+            memory: "128Mi"
             cpu: "50m"
         volumeMounts:
-          - name: odc-volume
+          - name: odt-volume
             mountPath: /data/
       volumes:
-      - name: odc-volume
+      - name: odt-volume
         persistentVolumeClaim:
-          claimName: odc-pvc
+          claimName: odt-pvc
