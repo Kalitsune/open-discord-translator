@@ -9,7 +9,7 @@
       "name": "envoyer",
       "description": "Envoie directement la traduction de votre message.",
       "success": {
-        "title":  "Envoyé !",
+        "title": "Envoyé !",
         "description": "Message: ${url}",
         "footer": "[Ce message disparaîtra dans ${time}s...]",
         "delete": "Supprimer"
@@ -36,7 +36,7 @@
         "add": {
           "name": "ajouter",
           "description": "Crée une liaison de traduction entre deux salons.",
-          "success": "Liaison de traduction créée: \uD83C\uDF10 <#${source}> → ${language} <#${target}>.",
+          "success": "Liaison de traduction créée: 🌐 <#${source}> → ${language} <#${target}>.",
           "errors": {
             "alreadyExists": "Un lien de traduction avec les même paramêtres existe déjà! Accédez à la liste des réplications avec </${name}:${id}>.",
             "differentGuilds": "Le salon source et de destination doivent faire partie du même serveur discord."
@@ -45,7 +45,7 @@
         "remove": {
           "name": "retirer",
           "description": "Supprime une liaison de traduction entre deux salons.",
-          "success": "Liaison de traduction suprimée: \uD83C\uDF10 <#${source}> → ${language} <#${target}>.",
+          "success": "Liaison de traduction suprimée: 🌐 <#${source}> → ${language} <#${target}>.",
           "errors": {
             "notFound": "Aucun lien de traduction n'existe avec ces paramètres! Accédez à la liste des réplications avec </${name}:${id}>."
           }
@@ -70,7 +70,7 @@
   "common": {
     "options": {
       "text": {
-        "name" : "message",
+        "name": "message",
         "description": "Le message à traduire."
       },
       "to": {
