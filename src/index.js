@@ -2,8 +2,8 @@
 const fs = require('fs')
 const path = require('path');
 
-const env = require('dotenv').config({path: fs.existsSync('.env.dev') ? '.env.dev' : '.env'}).parsed;
-process.env = require("dotenv-parse-variables")(env);  // init dotenv to use .env.dev instead of .env if it exists
+const env = require('dotenv').config({path: fs.existsSync('.env.dev') ? '.env.dev' : '.env'});
+process.env = require("dotenv-parse-variables")(process.env);  // init dotenv to use .env.dev instead of .env if it exists
 process.env.GUILD = env.GUILD
 
 const { Client, Collection, GatewayIntentBits} = require('discord.js');
