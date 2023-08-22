@@ -134,25 +134,12 @@ async function list(interaction) {
     // get the replicas
     const replicas = await interaction.client.db.getGuildReplicaChannels(interaction.guild.id);
 
-    // check if there are any replicas
-    if (replicas.length === 0) {
-        // reply to the interaction
-        const responseEmbed = new EmbedBuilder()
-            .setColor(process.env.ACCENT_COLOR)
-            .setDescription(getLocalization("commands:replicas.sub.list.errors.noReplicas", interaction.locale, {
-                name: `${interaction.command.name} ${module.exports.data.options[0].name}`,
-                id: interaction.command.id
-            }));
-        return await interaction.reply({embeds: [responseEmbed], ephemeral: true});
-    }
-
     // build the description
-
     let description = "";
     let i = 1;
     // add the replicas to the embed
     for (const replica of replicas) {
-        // get the source and target channels
+        // get the source and target channels as discord objects to check if they exist
         const sourceChannel = interaction.client.channels.cache.get(replica.source_channel_id);
         const targetChannel = interaction.client.channels.cache.get(replica.target_channel_id);
 
@@ -169,6 +156,18 @@ async function list(interaction) {
 
         // increment the number
         i++;
+    }
+
+    // check if there are any replicas, this message is sent only if no replicas are configured or if they all got deleted for being invalid at the step above
+    if (description.length === 0) {
+        // reply to the interaction
+        const responseEmbed = new EmbedBuilder()
+            .setColor(process.env.ACCENT_COLOR)
+            .setDescription(getLocalization("commands:replicas.sub.list.errors.noReplicas", interaction.locale, {
+                name: `${interaction.command.name} ${module.exports.data.options[0].name}`,
+                id: interaction.command.id
+            }));
+        return await interaction.reply({embeds: [responseEmbed], ephemeral: true});
     }
 
     // split the description into chunks
