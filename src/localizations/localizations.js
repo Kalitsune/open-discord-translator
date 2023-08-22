@@ -12,8 +12,8 @@ const vm = require('vm');
 module.exports = {
     getLocalization(key, locale, data = undefined) {
         // normalize localization
-        if (locale === "en-GB") {
-            locale = "en-US";
+        if (locale === "en-GB" || locale === "en-US") {
+            locale = "en";
         }
 
         // parse the key
@@ -26,7 +26,7 @@ module.exports = {
             translation = require(`./configs/${locale}.json`)[domain[0]];
         } catch (e) {
             console.log(`[WARNING] The localization file for ${locale} does not exist.`);
-            translation = require(`./configs/English.json`)[domain[0]];
+            translation = require(`./configs/en.json`)[domain[0]];
         }
 
         try {
@@ -38,7 +38,7 @@ module.exports = {
             try {
                 // try to get the translation in english
                 // console.log(`[WARNING] The key ${key} does not exist in the localization file for ${localization}.`);
-                translation = require(`./configs/English.json`)[domain[0]];
+                translation = require(`./configs/en.json`)[domain[0]];
                 for (const key of keys) {
                     translation = translation[key];
                 }
@@ -69,9 +69,9 @@ module.exports = {
             if (localization === 'en') {
                 localizationsValues["en-US"] = l;
                 localizationsValues["en-GB"] = l;
+            } else {
+                localizationsValues[localization] = l;
             }
-
-            localizationsValues[localization] = l;
         }
         return localizationsValues;
     },
