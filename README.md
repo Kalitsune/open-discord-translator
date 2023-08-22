@@ -1,5 +1,4 @@
 ![assets/icon.png](assets/icon.png)
-
 # open discord translator
 An open source discord bot using the latest discord integration features and supporting multiple translation backend
 
@@ -148,6 +147,12 @@ to invite the bot, use the link printed in the console
 | `sqlite`    | The sqlite database driver, you need to set the `SQLITE_PATH` environment variable to enable persistence but it is not mandatory |
 
 ## Development 
+
+### Localizations
+As of today, the bot is only localized in the following languages:
+![localizations](https://badges.awesome-crowdin.com/translation-15975655-609293.png)<br/>
+If you want to join the translation effort in order to make open-discord-translator available to a broader audience of people [you're welcome to help](https://crowdin.com/project/open-discord-translator/invite?h=1bff0f20415b6c77c234e5c0acd677771811165)!
+
 ### Setup
 clone the repository and install the dependencies
 ```bash
@@ -172,43 +177,6 @@ the bot is initialized in the `./src/index.js` file,
 everything in the `./src/discord/` directory is related to the discord api
 the `./discord/events/` discord directory contains the discord events listeners, the file name must be [one of those](https://old.discordjs.dev/#/docs/discord.js/main/typedef/Events)
 the `./discord/interactions/commands/` discord directory contains the discord commands, the file name does not matter
-
-### Localizations
-As of today, the bot is only localized in english and french. If you want to join the translation effort in order to make open-discord-translator available to a broader audience of people you're welcome to help!
-
-**If something is missing or wrong in the localization files and you want to fix it, please follow these steps:**
-
-#### 1. Fork the repository
-
-This is really easy to do but it will require you to have a GitHub account. If you don't have one, you can create one [here](https://github.com/join).
-
-Just click on the "[Fork](https://github.com/Kalitsune/open-discord-translator/fork)" button at the top right of the repository page and you're done!
-
-[![Fork button](assets/demos/ForkButtonScreenshot.png)](https://github.com/Kalitsune/open-discord-translator/fork)
-
-#### 2. Edit the localization files
-The localization files are located in the `./src/localization/configs` directory.
-You cannot create new files, you must edit the existing ones.
-
-If you are missing some keys make a copy of the content of the `English.json` file and paste it in the file you want to translate.
-Then replace the english text with the translated text.
-
-Tips: 
-- Missing keys will fall back to english.
-- You can use GitHub's UI to edit the files directly in your browser.
-
-#### 3. Commit your changes
-Once you are done with your changes, you can commit them to your forked repository.
-
-If you're using the github UI, you can commit directly from the browser.
-![Commit button](assets/demos/CommitButtonScreenshot.png)
-
-#### 4. Create a pull request
-Once you have committed your changes, you can create a pull request to the main repository.
-
-If you need any help during this step you can [open an issue](https://github.com/Kalitsune/open-discord-translator/issues/new).
-
-Once you've opened the pull request, I will merge your changes to the main bot.
 
 ### Add a new translation API driver
 create a new file in the `./src/api/drivers/` directory
