@@ -45,7 +45,7 @@ Use `/replicas list` to list all the replicas
 Use `/replicas remove` to remove a replica
 ![assets/replicas_remove_command.png](assets/demos/replicas_remove_command.png)
 
-⚠ because replicas require the privileged intent `READ_MESSAGE_CONTENT` to work, they are disabled by default.
+⚠ because replicas require the privileged intent `READ_MESSAGE_CONTENT` to work, they are disabled by default. (see the [Environment variables](#environment-variables) section for guidance)
 
 ## Installation
 ### Using Docker (recommended)

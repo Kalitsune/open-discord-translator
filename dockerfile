@@ -6,4 +6,5 @@ COPY . .
 
 RUN npm install --production
 
-CMD ["npm", "start"]
+ENTRYPOINT ["node"]
+CMD ["src/index.js"]
