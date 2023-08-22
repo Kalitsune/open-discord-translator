@@ -87,7 +87,7 @@ to invite the bot, use the link printed in the console
 [Direct deploy](https://github.com/Kalitsune/open-discord-translator/blob/main/open-discord-translator.yml) (you'll still need to setup some environment variables for it to work)
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/Kalitsune/open-discord-translator/main/open-discord-translator.yml
-kubectl edit deployment odt-deployment
+kubectl edit deployment.apps odt-deployment
 ```
 
 Using the [kubernetes deployment file](open-discord-translator.yaml) provided in this repository
