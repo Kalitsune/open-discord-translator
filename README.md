@@ -64,6 +64,7 @@ services:
       - SKIP_COMMAND_VALIDATION=false # if set to true, the bot will not check if the commands are up to date
       - ACCENT_COLOR=Blurple # the color of the embeds
       - DELETE_BUTTON_TIMEOUT=10 # the time in s before the delete button disappears (leave empty for infinite)
+      - ENABLE_REPLICAS=false # if set to true, the bot will translate channels message as defined in the db by the `/replicas` command ⚠ NEEDS THE MESSAGE_CONTENT PRIVILEGED INTENT ⚠
       - TRANSLATION_API_DRIVER=google_search # google_search, google_cloud or deepl
       - SELECTED_LANGUAGES=en,es,fr,de,it,ja,ko,pt,ru,zh-CN,zh-TW,pl,nl,sv,ar,cs,da,fi,el,hi,hu,id,no,la,ro # the languages you want to translate to and from (comma separated)
       - GOOGLE_API_KEY= # your google API key (paid google driver)
@@ -91,6 +92,7 @@ docker run -d \
     -e SKIP_COMMAND_VALIDATION=false \
     -e ACCENT_COLOR=Blurple \
     -e DELETE_BUTTON_TIMEOUT=10 \
+    -e ENABLE_REPLICAS=false \
     -e TRANSLATION_API_DRIVER=google_search \
     -e SELECTED_LANGUAGES=en,es,fr,de,it,ja,ko,pt,ru,zh-CN,zh-TW,pl,nl,sv,ar,cs,da,fi,el,hi,hu,id,no,la,ro \
     -e GOOGLE_API_KEY= \
@@ -123,7 +125,7 @@ to invite the bot, use the link printed in the console
 | Variable                  | Description                                                                                                                                                                            | Default value       |
 |---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
 | `TOKEN`                   | The discord bot token                                                                                                                                                                  | `none`              |
-| `GUILD`                   | The guild ID where the bot will be restricted to                                                                                                                                       | `none`              |
+| `GUILD`                   | IF defined, the bot will be restricted to this specific guild id                                                                                                                       | `none`              |
 | `SKIP_COMMAND_VALIDATION` | If set to true, the bot will not check if the commands are up to date                                                                                                                  | `false`             |
 | `ACCENT_COLOR`            | Color used for the bot embeds can be a number, hex or [one of those](https://old.discordjs.dev/#/docs/discord.js/14.11.0/typedef/ColorResolvable)                                      | `Blurple`           |
 | `DELETE_BUTTON_TIMEOUT`   | The time in seconds before the delete button for the `send` disappear (leave empty for infinite)                                                                                       | `10`                | 
