@@ -2,7 +2,7 @@ FROM node:latest
 
 WORKDIR /app
 
-COPY . .
+COPY --chown=nonroot:nonroot  . .
 
 RUN npm install --production
 
