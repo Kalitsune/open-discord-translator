@@ -48,7 +48,7 @@ spec:
           - name: DEEPL_API_KEY
             value: "" # your deepl auth key (deepl driver)
           - name: SQLITE_PATH
-            value: "database.sqlite" # the path to the database file
+            value: "/data/database.sqlite" # the path to the database file
           - name: DATABASE_DRIVER
             value: "sqlite" # sqlite is the only driver supported for now but feel free to add more
 

@@ -137,6 +137,7 @@ async function list(interaction) {
     // build the description
     let description = "";
     let i = 1;
+    let issue = false;
     // add the replicas to the embed
     for (const replica of replicas) {
         // get the source and target channels as discord objects to check if they exist
@@ -152,7 +153,15 @@ async function list(interaction) {
         }
 
         // add a formatted text to the description
-        description += `${i}.  \uD83C\uDF10 <#${replica.source_channel_id}> → ${getFlagEmoji(replica.target_language_code)} <#${replica.target_channel_id}>\n`
+        description += `${i}.  \uD83C\uDF10 <#${replica.source_channel_id}> → ${getFlagEmoji(replica.target_language_code)} <#${replica.target_channel_id}>`
+
+        // check if the bot can send messages in the target channel
+        if (!targetChannel.permissionsFor(interaction.client.user.id).has(PermissionFlagsBits.SendMessages)) {
+            description += "⚠"
+            issue = true;
+        }
+
+        description += "\n";
 
         // increment the number
         i++;
@@ -184,6 +193,12 @@ async function list(interaction) {
     for (let i = 1; i < descriptionChunks.length; i++) {
         // add a field to the embed
         responseEmbeds.push(getLocalization("commands:replicas.sub.list.title", interaction.locale), descriptionChunks[i]);
+    }
+
+    // if there are any issues
+    if (issue) {
+        // add a warning footer to the embed
+        responseEmbeds.at(-1).setFooter({text: getLocalization("commands:replicas.sub.list.errors.cannotSendMessage", interaction.locale)});
     }
 
     // reply to the interaction

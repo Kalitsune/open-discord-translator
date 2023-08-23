@@ -69,14 +69,19 @@ async function replicaHandler(message, replicaChannel) {
             });
         }
     } catch (e) {
-        // fallback method
-        for (let i = 0; i < messages.length; i++) {
-            await destinationChannel.send({
-                content: messages[i],
-                embeds: message.embeds,
-                files: message.files,
-                components: message.components,
-            });
+        try {
+            // fallback method
+            for (let i = 0; i < messages.length; i++) {
+                await destinationChannel.send({
+                    content: messages[i],
+                    embeds: message.embeds,
+                    files: message.files,
+                    components: message.components,
+                });
+            }
+        } catch (e) {
+            // ignore
         }
+
     }
 }
