@@ -55,7 +55,8 @@
           "description": "Affiche tous les liens de traduction actifs sur le serveur.",
           "title": "Réplications:",
           "errors": {
-            "noReplicas": "Aucun lien de traduction trouvé. Commencez en utilisant </${name}:${id}>!"
+            "noReplicas": "Aucun lien de traduction trouvé. Commencez en utilisant </${name}:${id}>!",
+            "cannotSendMessage": "⚠ Messages cannot be sent to the target of some replicas."
           }
         }
       }
