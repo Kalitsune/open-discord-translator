@@ -28,7 +28,7 @@
   "homepage": "https://github.com/Kalitsune/open-discord-translator#readme",
   "dependencies": {
     "@vitalets/google-translate-api": "^9.2.0",
-    "axios": "^1.4.0",
+    "axios": "^1.6.0",
     "deepl-node": "^1.10.2",
     "discord-api-types": "^0.37.62",
     "discord.js": "^14.13.0",
