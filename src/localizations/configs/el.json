@@ -55,7 +55,8 @@
           "description": "List all replicas.",
           "title": "Replicas:",
           "errors": {
-            "noReplicas": "There are no replicas. Get started with </${name}:${id}>!"
+            "noReplicas": "There are no replicas. Get started with </${name}:${id}>!",
+            "cannotSendMessage": "⚠ Messages cannot be sent to the target of some replicas."
           }
         }
       }
