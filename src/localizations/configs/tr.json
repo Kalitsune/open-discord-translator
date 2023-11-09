@@ -1,44 +1,44 @@
 {
   "commands": {
     "translate": {
-      "name": "translate",
-      "description": "Translate the text to the specified language.",
-      "success": "Translated ${from}  → ${to}"
+      "name": "çevir",
+      "description": "Metni belirtilen dile çevir.",
+      "success": "Başarıyla çevrildi: ${from}  → ${to}"
     },
     "send": {
-      "name": "send",
-      "description": "Directly send text in another language.",
+      "name": "gönder",
+      "description": "Metni doğrudan başka dilde gönder.",
       "success": {
-        "title": "Sent!",
-        "description": "Check it out: ${url}",
-        "footer": "[this message will disappear in ${time}s...]",
-        "delete": "Delete"
+        "title": "Gönderildi!",
+        "description": "Buna bir bak: ${url}",
+        "footer": "[Bu mesaj, ${time} saniye içinde kaybolacak...]",
+        "delete": "Sil"
       }
     },
     "replicas": {
-      "name": "replicas",
-      "description": "Manage replicas.",
+      "name": "kopyalar",
+      "description": "Kopyaları yönet.",
       "options": {
         "source": {
-          "name": "source",
-          "description": "The channel whose messages will be translated."
+          "name": "kaynak",
+          "description": "Mesajları silinecek olan kanal."
         },
         "target": {
-          "name": "target",
-          "description": "The channel where the translated messages should be sent."
+          "name": "hedef",
+          "description": "Çevrilen mesajların gönderilmesi gereken kanal."
         },
         "language": {
-          "name": "language",
-          "description": "The language to translate to."
+          "name": "dil",
+          "description": "Çevrilecek 2. dil."
         }
       },
       "sub": {
         "add": {
-          "name": "add",
-          "description": "Create a translation joint between two channels.",
-          "success": "Created a translation joint: 🌐 <#${source}> → ${language} <#${target}>.",
+          "name": "ekle",
+          "description": "İki kanal arasında bir çeviri geçişi oluştur.",
+          "success": "Çeviri geçişi oluşturuldu: 🌐 <#${source}> → ${language} <#${target}>.",
           "errors": {
-            "alreadyExists": "A translation joint with the same settings already exists. Please check </${name}:${id}>.",
+            "alreadyExists": "Aynı ayarları bulunan bir çeviri geçişi zaten var. Lütfen şurayı kontrol edin: </${name}:${id}>.",
             "differentGuilds": "The source and target channels must be in the same guild."
           }
         },
@@ -76,7 +76,7 @@
       },
       "to": {
         "name": "to",
-        "description": "The language to translate to."
+        "description": "Çevrilecek 2. dil."
       },
       "from": {
         "name": "from",
