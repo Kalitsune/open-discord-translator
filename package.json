@@ -30,7 +30,7 @@
     "@vitalets/google-translate-api": "^9.2.0",
     "axios": "^1.6.2",
     "deepl-node": "^1.10.2",
-    "discord-api-types": "^0.37.62",
+    "discord-api-types": "^0.37.63",
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
     "dotenv-parse-variables": "^2.0.0",
