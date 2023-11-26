@@ -29,7 +29,7 @@
   "dependencies": {
     "@vitalets/google-translate-api": "^9.2.0",
     "axios": "^1.6.2",
-    "deepl-node": "^1.10.2",
+    "deepl-node": "^1.11.0",
     "discord-api-types": "^0.37.65",
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
