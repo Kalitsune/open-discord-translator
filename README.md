@@ -48,6 +48,7 @@ Use `/replicas remove` to remove a replica
 ⚠ because replicas require the privileged intent `READ_MESSAGE_CONTENT` to work, they are disabled by default. (see the [Environment variables](#environment-variables) section for guidance)
 
 ## Installation
+⚠️ To setup the bot, you'll need a discord bot token. If you don't know how to create one, you can find a quick tutorial [here](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot).
 ### Using Docker (recommended)
 #### Docker compose (recommended)
 Edit the [docker-compose.yml](./docker-compose.yml) file present in this repo and set the environment variables (check the [Environment variables](#environment-variables) section for more information)
@@ -147,6 +148,8 @@ As of today, the bot is only localized in the following languages:
 If you want to join the translation effort in order to make open-discord-translator available to a broader audience of people [you're welcome to help](https://crowdin.com/project/open-discord-translator/invite?h=1bff0f20415b6c77c234e5c0acd677771811165)!
 
 ### Setup
+⚠️ To setup the bot, you'll need a discord bot token. If you don't know how to create one, you can find a quick tutorial [here](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot).
+
 clone the repository and install the dependencies
 ```bash
 git clone https://github.com/Kalitsune/open-discord-translator
@@ -154,7 +157,8 @@ cd open-discord-translator
 npm install
 ```
 
-create a .env.dev file and set the `DISCORD_TOKEN` variable (check the [Environment variables](#environment-variables) section for more information)
+cr
+eate a .env.dev file and set the `DISCORD_TOKEN` variable (check the [Environment variables](#environment-variables) section for more information)
 ```bash
 cp .env .env.dev
 ```
