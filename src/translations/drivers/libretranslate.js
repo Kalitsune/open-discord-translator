@@ -20,6 +20,10 @@ module.exports = {
         });
     },
     async translate(text, to = "en", from = undefined) {
+        if (to === "en-GB" || to === "en-US") {
+            to = "en";
+        }
+
         if (!from) {
             const detectResponse = await axios.post(`${process.env.LIBRETRANSLATE_URL}/detect`, dictToFormData({ q: text }));
 
