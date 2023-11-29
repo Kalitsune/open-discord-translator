@@ -27,7 +27,7 @@ module.exports = {
         const translated = await interaction.client.translate(interaction.targetMessage.content, interaction.guildLocale);
         
         // send the translated message
-        sendMessageAsUser(interaction, translated);
+        sendMessageAsUser(interaction.client, interaction.channel, interaction.targetMessage.author, translated);
 
 
         // cancel the interaction response if not already responded

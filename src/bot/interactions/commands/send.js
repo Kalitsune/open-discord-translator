@@ -41,7 +41,7 @@ module.exports = {
 
         const translated = await interaction.client.translate(text, to, from);
 
-        const {webhook, sentMessages} = await sendMessageAsUser(interaction, translated);
+        const {webhook, sentMessages} = await sendMessageAsUser(interaction.client, interaction.channel, interaction.member, translated);
 
         // If sentMessages is empty, this means that the messages were sent via text and not webhook so we can end the function there.
         if (sentMessages.length == 0) {
