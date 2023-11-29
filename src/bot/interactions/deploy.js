@@ -1,5 +1,4 @@
 const { REST, Routes } = require('discord.js');
-const { restart } = require("../../helpers/restart.js")
 
 // Construct and prepare an instance of the REST module
 const rest = new REST().setToken(process.env.TOKEN);
