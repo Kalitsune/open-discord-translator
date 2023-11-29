@@ -9,11 +9,16 @@ let sourceChannelIDs = [];
 module.exports = {
     name: Events.MessageCreate,
     async execute(message) {
-        // get the replica channel
-        const replicaChannel = (await message.client.db.getReplicaChannels()).find(replica => replica.source_channel_id === message.channel.id);
         // check that ENABLE_REPLICAS is true, if the author is part of the server and if the replica channel is found
-        if (process.env.ENABLE_REPLICAS && message.content && !message.channel.isDMBased() && replicaChannel) {
-            replicaHandler(message, replicaChannel);
+        if (process.env.ENABLE_REPLICAS && message.content && !message.channel.isDMBased() && !message.webhookId) {
+            // get the replica channels
+            const replicaChannels = (await message.client.db.getReplicaChannels()).filter(replica => replica.source_channel_id === message.channel.id);
+            for (let replica in replicaChannels) {
+                replica = replicaChannels[replica]
+                if (replica) {
+                    replicaHandler(message, replica);
+                }
+            }
         }
     }
 }
