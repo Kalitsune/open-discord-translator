@@ -75,6 +75,7 @@ docker run -d \
     -e SELECTED_LANGUAGES=en,es,fr,de,it,ja,ko,pt,ru,zh-CN,zh-TW,pl,nl,sv,ar,cs,da,fi,el,hi,hu,id,no,la,ro \
     -e GOOGLE_API_KEY= \
     -e DEEPL_API_KEY= \
+    -e LIBRETRANSLATE_URL= \
     -e DATABASE_PATH=database.sqlite \
     -e DATABASE_DRIVER=sqlite \
     -v open-discord-translator:/app/database.sqlite \
@@ -91,9 +92,9 @@ kubectl apply -f https://raw.githubusercontent.com/Kalitsune/open-discord-transl
 kubectl edit deployment.apps odt-deployment
 ```
 
-Using the [kubernetes deployment file](open-discord-translator.yaml) provided in this repository
+Using the [kubernetes deployment file](open-discord-translator.yml) provided in this repository
 ```bash
-kubectl apply -f open-discord-translator.yaml
+kubectl apply -f open-discord-translator.yml
 ```
 
 ### Using nodejs
@@ -126,15 +127,17 @@ to invite the bot, use the link printed in the console
 | `SELECTED_LANGUAGES`      | The languages to use for the translation command, if empty, the first 25 supported languages returned by the translation driver will be used                                           | `[CSV, check .env]` |
 | `GOOGLE_API_KEY`          | Your [google api key](https://ezgielouzeh.medium.com/google-translate-api-javascript-81f55039611d), only needed if you use the [google paid translation API](#translation-api-drivers) | `none`              |
 | `DEEPL_API_KEY`           | Your deepl auth key, only needed if you use the [deepl translation API](#translation-api-drivers)                                                                                      | `none`              |
+| `LIBRETRANSLATE_URL`      | The link to where your libretranslate is running, only needed if you use [libretranslate](#setting-up-libretranslate)                                                                  | `none`              |
 | `DATABASE_DRIVER`         | The database driver to use ([check supported drivers](#database-api-drivers))                                                                                                          | `sqlite`            |
 | `SQLITE_PATH`             | The path to the sqlite database file, only needed if you use the [sqlite database driver](#database-api-drivers)                                                                       | `./database.sqlite` |
 
 ### Translation API drivers
-| Driver name     | Description                                                                           |
-|-----------------|---------------------------------------------------------------------------------------|
-| `google_search` | The google translation API for free, the threshold might be low                       |
-| `google_cloud`  | The google translation API, you need to set the `GOOGLE_API_KEY` environment variable |
-| `deepl`         | The deepl translation API, you need to set the `DEEPL_API_KEY` environment variable   |
+| Driver name      | Description                                                                           |
+|------------------|---------------------------------------------------------------------------------------|
+| `google_search`  | The google translation API for free, the threshold might be low                       |
+| `google_cloud`   | The google translation API, you need to set the `GOOGLE_API_KEY` environment variable |
+| `deepl`          | The deepl translation API, you need to set the `DEEPL_API_KEY` environment variable   |
+| `libretranslate` | The libretranslate API, you need to set the `LIBRETRANSLATE_URL` environment variable |
 ### Database API drivers
 | Driver name | Description                                                                                                                      |
 |-------------|----------------------------------------------------------------------------------------------------------------------------------|
@@ -168,6 +171,21 @@ then start the bot
 npm run dev
 ```
 to invite the bot, use the link printed in the console
+
+#### Setting Up LibreTranslate
+To utilize [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate), you must first set it up, which is a straightforward process. Begin by cloning the repository with the following command:
+```bash
+git clone git@github.com:LibreTranslate/LibreTranslate.git
+```
+Ensure docker is operational on your system, then initiate LibreTranslate using:
+```bash
+./run.sh --port 6969 # Use http://localhost:6969 as your LIBRETRANSLATE_URL
+# For Windows, use: run.bat --port 6969
+```
+
+Additionally, various methods for launching LibreTranslate are detailed here: [click](https://github.com/LibreTranslate/LibreTranslate#install-and-run), providing instructions for docker, CUDA hardware acceleration, [k8s](https://github.com/LibreTranslate/LibreTranslate#run-with-kubernetes), and building from source.
+
+A comprehensive list of all [settings and flags](https://github.com/LibreTranslate/LibreTranslate#settings--flags) is also available, offering options to modify the IP address and port for LibreTranslate, along with many other configurations.
 
 ### Discord api
 the bot is initialized in the `./src/index.js` file,

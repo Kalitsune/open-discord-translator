@@ -1,23 +1,6 @@
 const axios = require('axios');
 const error = require('../../errors.js');
-
-function handleErrors(response) {
-    if (response.data.error) {
-        console.log(response.data.error.status);
-        //catch errors and bind them to an existing error class
-        if (["UNAUTHENTICATED", "PERMISSION_DENIED"].includes(response.data.error.status)) {
-            throw new error.errUnauthorized(response.data.error.message);
-        } else if (["Daily Limit Exceeded", "User Rate Limit Exceeded", "Quota Exceeded"].includes(response.data.error.message)) {
-            throw new error.errMaxQuota(response.data.error.message);
-        } else if (["Rate Limit Exceeded"].includes(response.data.error.message)) {
-            throw new error.errRateLimit(response.data.error.message);
-        } else if (["INVALID_ARGUMENT", "FAILED_PRECONDITION", "OUT_OF_RANGE", "UNIMPLEMENTED", "INTERNAL", "UNAVAILABLE", "DATA_LOSS"].includes(response.data.error.status)){
-            throw new error.errBadRequest(response.data.error.message);
-        } else {
-            throw new error.errUnknown(response.data.error.message);
-        }
-    }
-}
+const handleAxiosErrors = require("../../helpers/handleAxiosErrors");
 
 module.exports = {
     async init() {
@@ -29,7 +12,7 @@ module.exports = {
         const res = await axios.get(`https://translation.googleapis.com/language/translate/v2/languages?key=${process.env.GOOGLE_APPLICATION_CREDENTIALS}`, {validateStatus: () => true});
 
         // handle errors
-        handleErrors(res);
+        handleAxiosErrors(res);
 
         // return the supported languages but rename the `language` field to `name`
         return res.data.data.languages.map((lang) => {
@@ -49,7 +32,7 @@ module.exports = {
         );
 
         // handle errors
-        handleErrors(res);
+        handleAxiosErrors(res);
 
         return {text: res.data.data.translations[0].translatedText, from: res.data.data.translations[0].detectedSourceLanguage};
     }
