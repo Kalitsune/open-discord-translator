@@ -1,4 +1,5 @@
 const { REST, Routes } = require('discord.js');
+const { restart } = require("../../helpers/restart.js")
 
 // Construct and prepare an instance of the REST module
 const rest = new REST().setToken(process.env.TOKEN);
@@ -30,6 +31,7 @@ module.exports = {
                 );
 
                 if (data.length) console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+                restart()              
             }
         } catch (error) {
             // And of course, make sure you catch and log any errors!
