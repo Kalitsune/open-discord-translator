@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 
 const { getKeyLocalizations } = require('../../../localizations/localizations.js');
-const { makeResponseEmbeds } = require('../../../utils');
+const { makeResponseEmbeds } = require('../../../helpers/makeResponseEmbeds.js');
 
 module.exports = {
     init (client) {

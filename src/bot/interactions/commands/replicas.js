@@ -8,7 +8,8 @@
 const { SlashCommandBuilder, PermissionFlagsBits, ChannelType, EmbedBuilder } = require('discord.js');
 
 const { getKeyLocalizations, getLocalization } = require('../../../localizations/localizations.js');
-const { getFlagEmoji, splitString } = require('../../../utils');
+const { getFlagEmoji } = require('../../../helpers/getFlagEmoji.js');
+const { splitString } = require('../../../helpers/splitString.js');
 
 module.exports = {
     init(client) {

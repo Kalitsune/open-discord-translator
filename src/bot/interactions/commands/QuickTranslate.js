@@ -1,7 +1,7 @@
 const { ContextMenuCommandBuilder, ApplicationCommandType} = require('discord.js');
 
 const { getKeyLocalizations, getLocalization} = require('../../../localizations/localizations');
-const { makeResponseEmbeds } = require('../../../utils');
+const { makeResponseEmbeds } = require('../../../helpers/makeResponseEmbeds');
 
 module.exports = {
     init (client) {

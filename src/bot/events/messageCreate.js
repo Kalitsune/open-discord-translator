@@ -1,6 +1,7 @@
 //InteractionCreate event
 const { Events } = require('discord.js');
-const {splitString, getFlagEmoji} = require("../../utils");
+const { getFlagEmoji } = require("../../helpers/getFlagEmoji.js");
+const { splitString } = require("../../helpers/splitString.js");
 
 
 let sourceChannelIDs = [];
