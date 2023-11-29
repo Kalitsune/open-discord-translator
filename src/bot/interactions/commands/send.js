@@ -1,8 +1,7 @@
 const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, DiscordjsErrorCodes} = require('discord.js');
-const { ChannelType} = require('discord-api-types/v10');
 
 const { getKeyLocalizations, getLocalization } = require('../../../localizations/localizations.js');
-const { splitString, getFlagEmoji} = require("../../../utils");
+const { sendMessageAsUser } = require('../../../helpers/sendMessageAsUser.js');
 
 module.exports = {
     init (client) {
@@ -42,48 +41,13 @@ module.exports = {
 
         const translated = await interaction.client.translate(text, to, from);
 
-        const messages = splitString(translated.text, 2000);
+        const {webhook, sentMessages} = await sendMessageAsUser(interaction, translated);
 
-        // if possible use webhooks, otherwise use the bot
-        // if the channel is a thread the webhook needs to be created in the parent channel
-        const isThread = interaction.channel.type === ChannelType.PublicThread || interaction.channel.type === ChannelType.PrivateThread;
-        const webhookChannel = isThread ? interaction.channel.parent : interaction.channel;
-        let webhook;
-        try {
-            // send a message using the user name and pfp using webhooks
-            //check if there's a webhook that can be used
-            webhook = await webhookChannel.fetchWebhooks().then(webhooks => {
-                return webhooks.find(webhook => webhook.owner.id === interaction.client.user.id);
-            });
-
-            if (!webhook) {
-                //create a webhook
-                webhook = await webhookChannel.createWebhook({
-                    name: interaction.client.user.username,
-                    avatar: interaction.client.user.displayAvatarURL({format: 'png', dynamic: true}),
-                    reason: "needed for /send to use webhooks instead of the bot"
-                });
-            }
-
-        } catch (e) {
-            // fallback method
-            await interaction.reply(messages[0]);
-            // loop through the other messages (if any) and send them as follow ups
-            for (let i = 1; i < messages.length; i++) {
-                await interaction.followUp(messages[i]);
-            }
-            return;
+        // If sentMessages is empty, this means that the messages were sent via text and not webhook so we can end the function there.
+        if (sentMessages.length == 0) {
+          return;
         }
-        // send the message
-        let sentMessages = [];
-        for (let i = 0; i < messages.length; i++) {
-            sentMessages.push(await webhook.send({
-                content: messages[i],
-                username: getFlagEmoji(to) + " " + (interaction.member.nickname || interaction.user.globalName),
-                avatarURL: interaction.member.displayAvatarURL({format: 'png', dynamic: true}),
-                threadId: isThread ? interaction.channel.id : null
-            }));
-        }
+
         // reply with an ephemeral delete button
         const responseEmbed = new EmbedBuilder()
             .setTitle(getLocalization('commands:send.success.title', interaction.locale))
