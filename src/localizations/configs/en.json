@@ -66,6 +66,9 @@
     "translate": {
       "name": "Translate",
       "footer": "pro tip: this feature uses the language defined in your discord settings."
+    },
+    "send": {
+        "name": "Translate and send"
     }
   },
   "common": {
