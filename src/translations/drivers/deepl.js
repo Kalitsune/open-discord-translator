@@ -16,7 +16,7 @@ module.exports = {
             //                                                   Deepl doesn't support en as target language, so we use en-US instead
             const translation = await translator.translateText(text, from, to === "en" ? "en-US" : to);
             // you must return the translated text and the source language, if it is auto, then return the detected language
-            return {text: translation.text, from: translation.detectedSourceLang};
+            return {text: translation.text, from: translation.detectedSourceLang, to};
         } catch (e) {
             if (e instanceof TooManyRequestsError || e instanceof QuotaExceededError) {
                 // use google translate api as fallback

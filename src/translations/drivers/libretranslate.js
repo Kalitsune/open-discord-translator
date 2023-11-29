@@ -37,6 +37,6 @@ module.exports = {
 
         handleAxiosErrors(response);
 
-        return {text: response.data.translatedText, from};
+        return {text: response.data.translatedText, from, to};
     }
 }

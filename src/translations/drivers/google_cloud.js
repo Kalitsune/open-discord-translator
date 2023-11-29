@@ -34,6 +34,6 @@ module.exports = {
         // handle errors
         handleAxiosErrors(res);
 
-        return {text: res.data.data.translations[0].translatedText, from: res.data.data.translations[0].detectedSourceLanguage};
+        return {text: res.data.data.translations[0].translatedText, from: res.data.data.translations[0].detectedSourceLanguage, to};
     }
 }

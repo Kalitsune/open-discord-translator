@@ -12,7 +12,7 @@ module.exports = {
     async translate(text, to, from = undefined) {
         if (from === "zh") from = "zh-CN";
         const { raw } = await translate(text, { to, from });
-        return { text: raw.sentences[0].trans, from: raw.src };
+        return { text: raw.sentences[0].trans, from: raw.src, to};
     }
 }
 

@@ -221,7 +221,7 @@ module.exports = {
         // feel free to add more environment variables if needed (don't forget to update the readme)
         
         // you must return the translated text and the source language, if it is auto, then return the detected language
-        return {text: translated_text, from: source_language}
+        return {text: translated_text, from: source_language, to}
     }
 }
 ```
@@ -253,7 +253,7 @@ module.exports = {
     async getReplicaChannel(sourceChannelId, targetChannelId, targetLanguageCode) {
         // get a specific channel to be replicated
     },
-        async removeReplicaChannel(sourceChannelId, targetChannelId, targetLanguageCode) {
+    async removeReplicaChannel(sourceChannelId, targetChannelId, targetLanguageCode) {
         // remove a channel from the replication list
     },
 }
