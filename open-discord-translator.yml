@@ -47,6 +47,8 @@ spec:
             value: "" # your google API key (paid google driver)
           - name: DEEPL_API_KEY
             value: "" # your deepl auth key (deepl driver)
+          - name: LIBRETRANSLATE_URL # your libretranslate api url (libretranslate driver) (e.g. http://localhost:6969)
+            value: ""
           - name: SQLITE_PATH
             value: "/data/database.sqlite" # the path to the database file
           - name: DATABASE_DRIVER
