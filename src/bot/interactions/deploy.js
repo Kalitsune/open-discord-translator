@@ -30,8 +30,11 @@ module.exports = {
                     { body: commands },
                 );
 
-                if (data.length) console.log(`Successfully reloaded ${data.length} application (/) commands.`);
-                restart()              
+                if (data.length) {
+                    console.log(`Successfully refreshed ${data.length} application (/) commands.`);
+                    console.log("[EXIT] Restart needed. Byebye.")
+                    process.exit(0);
+                }          
             }
         } catch (error) {
             // And of course, make sure you catch and log any errors!
