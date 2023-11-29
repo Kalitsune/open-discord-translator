@@ -75,6 +75,7 @@ docker run -d \
     -e SELECTED_LANGUAGES=en,es,fr,de,it,ja,ko,pt,ru,zh-CN,zh-TW,pl,nl,sv,ar,cs,da,fi,el,hi,hu,id,no,la,ro \
     -e GOOGLE_API_KEY= \
     -e DEEPL_API_KEY= \
+    -e LIBRETRANSLATE_URL= \
     -e DATABASE_PATH=database.sqlite \
     -e DATABASE_DRIVER=sqlite \
     -v open-discord-translator:/app/database.sqlite \
