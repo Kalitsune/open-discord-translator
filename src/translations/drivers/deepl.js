@@ -26,5 +26,6 @@ module.exports = {
                 throw e;
             }
         }
-    }
+    },
+    name: "Deepl"
 }

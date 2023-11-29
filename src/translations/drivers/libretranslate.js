@@ -43,5 +43,6 @@ module.exports = {
         handleAxiosErrors(response);
 
         return {text: response.data.translatedText, from, to};
-    }
+    },
+    name: "Libretranslate"
 }

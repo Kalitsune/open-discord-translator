@@ -14,7 +14,8 @@ module.exports = {
         if (from === "zh") from = "zh-CN";
         const { raw } = await translate(text, { to, from });
         return { text: raw.sentences[0].trans, from: raw.src, to};
-    }
+    },
+    name: "Google translate"
 }
 
 // this can't be over 25 items long because of discord's slash command limit

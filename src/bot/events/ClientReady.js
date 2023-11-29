@@ -1,12 +1,15 @@
 //ClientReady event
-const { Events } = require('discord.js');
+const { Events, ActivityType } = require('discord.js');
 const { deployCommands } = require('../interactions/deploy.js');
+const translation_driver = require('../../translations/translations.js')
+
 let verbose = false;
 module.exports = {
     name: Events.ClientReady,
     async execute(client) {
         console.log(`Invite me using: https://discord.com/api/oauth2/authorize?client_id=${client.application.id}&permissions=2684371968&scope=bot`)
 
+        client.user.setActivity(`Translating with ${translation_driver.name}.`, {type: ActivityType.Custom});
 
         // if process.env.GUILD is set, check if the bot is in the guild
         if (process.env.GUILD) {

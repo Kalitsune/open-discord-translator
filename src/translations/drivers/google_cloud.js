@@ -32,5 +32,6 @@ module.exports = {
         handleAxiosErrors(res);
 
         return {text: res.data.data.translations[0].translatedText, from: res.data.data.translations[0].detectedSourceLanguage, to};
-    }
+    },
+    name: "Google translate"
 }

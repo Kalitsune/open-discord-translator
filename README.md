@@ -223,7 +223,8 @@ module.exports = {
         
         // you must return the translated text and the source language, if it is auto, then return the detected language
         return {text: translated_text, from: source_language, to}
-    }
+    },
+    name: "Demo module"
 }
 ```
 
