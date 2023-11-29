@@ -56,7 +56,7 @@
           "title": "Réplications:",
           "errors": {
             "noReplicas": "Aucun lien de traduction trouvé. Commencez en utilisant </${name}:${id}>!",
-            "cannotSendMessage": "⚠ Le message n'a pas pu être envoyé pour certaines réplications."
+            "cannotSendMessage": "⚠ Les messages ne peuvent pas être envoyés aux salons de destinations de certaines réplications."
           }
         }
       }
@@ -66,6 +66,9 @@
     "translate": {
       "name": "Traduire",
       "footer": "info: cette fonctionnalité utilise le langage défini dans vos paramètres discord"
+    },
+    "send": {
+      "name": "Traduire et envoyer"
     }
   },
   "common": {
