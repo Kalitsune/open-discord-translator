@@ -92,9 +92,9 @@ kubectl apply -f https://raw.githubusercontent.com/Kalitsune/open-discord-transl
 kubectl edit deployment.apps odt-deployment
 ```
 
-Using the [kubernetes deployment file](open-discord-translator.yaml) provided in this repository
+Using the [kubernetes deployment file](open-discord-translator.yml) provided in this repository
 ```bash
-kubectl apply -f open-discord-translator.yaml
+kubectl apply -f open-discord-translator.yml
 ```
 
 ### Using nodejs
