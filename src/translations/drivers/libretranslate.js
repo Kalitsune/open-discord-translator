@@ -19,7 +19,8 @@ module.exports = {
             }
         });
     },
-    async translate(text, to = "en", from = undefined) {
+    async translate(text, to, from = undefined) {
+        to = to || "en"
         if (to === "en-GB" || to === "en-US") {
             to = "en";
         }

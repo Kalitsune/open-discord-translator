@@ -216,6 +216,7 @@ module.exports = {
         return supported_languages
     },
     async translate(text, to, from= undefined) {
+        to = to || "en"
         // translate the text from the source language to the target language
         // return the translated text
         // feel free to add more environment variables if needed (don't forget to update the readme)

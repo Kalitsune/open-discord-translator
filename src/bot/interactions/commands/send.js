@@ -26,7 +26,7 @@ module.exports = {
             option.setName('to').setDescription("The language to translate to.")
                 .setNameLocalizations(getKeyLocalizations('common:options.to.name'))
                 .setDescriptionLocalizations(getKeyLocalizations('common:options.to.description'))
-                .setRequired(true))
+                .setRequired(false))
         .addStringOption(option =>
             option.setName('from').setDescription("The language to translate from.")
                 .setNameLocalizations(getKeyLocalizations('common:options.from.name'))

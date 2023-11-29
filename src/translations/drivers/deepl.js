@@ -11,6 +11,7 @@ module.exports = {
         return await translator.getSourceLanguages();
     },
     async translate(text, to, from= null) {
+        to = to || "en"
         // translate the text
         try {
             //                                                   Deepl doesn't support en as target language, so we use en-US instead

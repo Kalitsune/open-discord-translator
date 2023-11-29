@@ -20,10 +20,7 @@ module.exports = {
         });
     },
     async translate(text, to, from = undefined) {
-        // translate the text from the source language to the target language
-        // return the translated text
-        // feel free to add more environment variables if needed (don't forget to update the readme)
-
+        to = to || "en"
         // needs $GOOGLE_APPLICATION_CREDENTIALS
         // request the translation from the google translation translations
         let res = await axios.post(

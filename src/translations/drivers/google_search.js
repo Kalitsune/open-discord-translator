@@ -10,6 +10,7 @@ module.exports = {
         return supported_languages;
     },
     async translate(text, to, from = undefined) {
+        to = to || "en"
         if (from === "zh") from = "zh-CN";
         const { raw } = await translate(text, { to, from });
         return { text: raw.sentences[0].trans, from: raw.src, to};
