@@ -160,7 +160,7 @@ cd open-discord-translator
 npm install
 ```
 
-create a .env.dev file and set the `DISCORD_TOKEN` variable (check the [Environment variables](#environment-variables) section for more information)
+create a .env.dev file and set the `TOKEN` variable (check the [Environment variables](#environment-variables) section for more information)
 ```bash
 cp .env .env.dev
 ```
