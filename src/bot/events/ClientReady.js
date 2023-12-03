@@ -7,7 +7,7 @@ let verbose = false;
 module.exports = {
     name: Events.ClientReady,
     async execute(client) {
-        client.user.setActivity(`Translating with ${translation_driver.name}.`, {type: ActivityType.Custom});    
+        client.user.setActivity(`Starting...`, {type: ActivityType.Custom});    
 
         // if process.env.GUILD is set, check if the bot is in the guild
         if (process.env.GUILD) {
