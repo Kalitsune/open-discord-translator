@@ -160,11 +160,11 @@ cd open-discord-translator
 npm install
 ```
 
-cr
-eate a .env.dev file and set the `DISCORD_TOKEN` variable (check the [Environment variables](#environment-variables) section for more information)
+create a .env.dev file and set the `DISCORD_TOKEN` variable (check the [Environment variables](#environment-variables) section for more information)
 ```bash
 cp .env .env.dev
 ```
+**⚠️ warning:** it is <u>HIGHLY RECOMMENDED</u> to set a GUILD_ID if you're planning on starting the bot for development purposes. It'll tell the bot to register its commands on your guild which is instantaneous instead of registering global commands which take a while to get registered. 
 
 then start the bot
 ```bash

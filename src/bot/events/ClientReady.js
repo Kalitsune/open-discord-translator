@@ -7,9 +7,7 @@ let verbose = false;
 module.exports = {
     name: Events.ClientReady,
     async execute(client) {
-        console.log(`Invite me using: https://discord.com/api/oauth2/authorize?client_id=${client.application.id}&permissions=2684371968&scope=bot`)
-
-        client.user.setActivity(`Translating with ${translation_driver.name}.`, {type: ActivityType.Custom});
+        client.user.setActivity(`Translating with ${translation_driver.name}.`, {type: ActivityType.Custom});    
 
         // if process.env.GUILD is set, check if the bot is in the guild
         if (process.env.GUILD) {
@@ -19,85 +17,20 @@ module.exports = {
             }
         }
 
-        // check if the commands are valid
-        if (process.env.SKIP_COMMAND_VALIDATION) {
-            console.log(`[INFO] commands validity check skipped.`);
-        } else {
-            //check commands validity
-            console.log(`[INFO] starting commands validity check...`);
-            await checkCommandValidity(client);
-            console.log(`[INFO] commands validity check completed.`);
-        }
+        await reloadSlashCommands(client)
 
         // Greet the user
         console.log(`Ready! Serving ${client.commands.size} commands as ${client.user.tag}`);
+
+        console.log(`Invite me using: https://discord.com/api/oauth2/authorize?client_id=${client.application.id}&permissions=2684371968&scope=bot`)
+
+        client.user.setActivity(`Translating with ${translation_driver.name}.`, {type: ActivityType.Custom});
     }
 }
 
-async function fetchVars(client) {
-    await client.application.commands.fetch();
-    if (process.env.GUILD) await client.guilds.cache.get(process.env.GUILD).commands.fetch();
-
-    // const def
-    // globalCommandsCache the commands registered globally
-    // globalCommands the names of the commands registered globally
-    // guildCommandsCache the commands registered in the guild
-    // guildCommands the names of the commands registered in the guild
-    // registeredCommands the names of the commands registered in the guild if the guild is set, otherwise the names of the commands registered globally
-    // commands the names of the commands in the commands folder
+async function reloadSlashCommands(client) {
     const globalCommandsCache = client.application.commands.cache;
     const globalCommands = globalCommandsCache.map(command => command.name);
-    const guildCommandsCache = process.env.GUILD ? client.guilds.cache.get(process.env.GUILD).commands.cache : [];
-    const guildCommands = guildCommandsCache.map(command => command.name);
-    const registeredCommands = process.env.GUILD ? guildCommands : globalCommands;
-    const registeredCommandsCache = process.env.GUILD ? guildCommandsCache : globalCommandsCache;
-    const commands = client.commands.map(c => c.data.toJSON().name);
-
-    return {globalCommandsCache, globalCommands, guildCommandsCache, guildCommands, registeredCommands, registeredCommandsCache, commands};
-}
-
-function checkJSONEquality(command1, command2) {
-    for (const key in command1) {
-        // array check
-        if (((command1[key]) ^ (command2[key])) || (Array.isArray(command1[key]))) {
-            for (let i = 0 ; i < command1[key].length; i += 1) {
-                //check if the array is the same length
-                if (command1[key] && !command2[key] || !command1[key] && command2[key] || command1[key].length !== command2[key].length) {
-                    console.log(`[WARNING] commands validity check failed: properties count mismatch.`);
-                    return false;
-                }
-
-                //check if the array content is the same
-                if (!checkJSONEquality(command1[key][i], command2[key][i])) {
-                    return false;
-                }
-            }
-        // object check
-        } else if (typeof command1[key] === 'object') {
-            //discord does not return the localisations of the commands, so we skip this check otherwise it would fail
-            if (key.toLowerCase().includes("local")) return true;
-
-            //check if there is an object in command2
-            if (((command1[key]) ^ (command2[key])) || typeof command2[key] !== 'object') {
-                console.log(`[WARNING] commands validity check failed: found ${command1?.name}/${[key]}:OBJECT instead of ${command2?.name}/${[key]}:OBJECT.`);
-                return false;
-            } else {
-                //check command validity
-                console.log("analysing object: " + key)
-                return checkJSONEquality(command1[key], command2[key])
-            }
-        // other check
-        } else if (((command1[key]) ^ (command2[key])) || ((typeof command1[key] === 'string' ? (command1[key].trim()) : command1[key]) !== command2[key])) {
-            console.log(`[WARNING] commands validity check failed: found ${command1?.name}/${[key]}:"${command1?.key}" instead of ${command2?.name}/${[key]}:"${command2?.key}".`);
-            return false;
-        }
-    }
-
-    return true;
-}
-
-async function checkCommandValidity(client) {
-    let {globalCommandsCache, globalCommands, guildCommandsCache, guildCommands, registeredCommands, registeredCommandsCache, commands} = await fetchVars(client);
 
     // delete global commands if the guild is set
     if (process.env.GUILD && globalCommands.length > 0) {
@@ -118,29 +51,14 @@ async function checkCommandValidity(client) {
             });
         });
     }
-
-    //check that the commands are the same
-    if (commands.length !== registeredCommands.length) {
-        console.log(`[WARNING] commands parity check failed: found ${registeredCommands.length} commands instead of ${commands.length}.`);
+    
+    // reload the commands
+    if (process.env.SKIP_COMMAND_VALIDATION) {
+        console.log(`[INFO] commands validity check skipped.`);
+    } else {
+        //check commands validity
+        console.log(`[INFO] reloading commands...`);
         await deployCommands(client.application.id, client.commands.map(c => c.data.toJSON()));
-        return false;
-    }
-
-    //check if the names matches
-    if (!registeredCommands.every(el => commands.includes(el))) {
-        console.log(`[WARNING] commands names mismatch: ${registeredCommands} vs ${commands}`)
-        await deployCommands(client.application.id, client.commands.map(c => c.data.toJSON()));
-        return false;
-    }
-
-    //check if every command in the commands folder match the registered commands
-    for (let command of commands) {
-        command = client.commands.get(command).data.toJSON();
-        verbose = command.name === "replicas";
-        const registeredCommand = registeredCommandsCache.find(c => c.name === command.name);
-        if (!checkJSONEquality(command, registeredCommand)) {
-            await deployCommands(client.application.id, client.commands.map(c => c.data.toJSON()));
-            return false;
-        }
+        console.log(`[INFO] done!`)
     }
 }

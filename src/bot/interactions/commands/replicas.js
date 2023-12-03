@@ -113,7 +113,7 @@ async function add(interaction) {
             const responseEmbed = new EmbedBuilder()
                 .setColor(process.env.ACCENT_COLOR)
                 .setDescription(getLocalization("commands:replicas.sub.add.errors.alreadyExists", interaction.locale, {
-                    name: `${interaction.command.name} ${module.exports.data.options[2].name}`,
+                    name: `${interaction.command.name} ${interaction.command.options[2].name}`,
                     id: interaction.command.id
                 }));
             return await interaction.reply({embeds: [responseEmbed], ephemeral: true});
@@ -174,7 +174,7 @@ async function list(interaction) {
         const responseEmbed = new EmbedBuilder()
             .setColor(process.env.ACCENT_COLOR)
             .setDescription(getLocalization("commands:replicas.sub.list.errors.noReplicas", interaction.locale, {
-                name: `${interaction.command.name} ${module.exports.data.options[0].name}`,
+                name: `${interaction.command.name} ${interaction.command.options[0].name}`,
                 id: interaction.command.id
             }));
         return await interaction.reply({embeds: [responseEmbed], ephemeral: true});
@@ -222,7 +222,7 @@ async function remove(interaction) {
         const responseEmbed = new EmbedBuilder()
             .setColor(process.env.ACCENT_COLOR)
             .setDescription(getLocalization("commands:replicas.sub.remove.errors.notFound", interaction.locale, {
-                name: `${interaction.command.name} ${module.exports.data.options[2].name}`,
+                name: `${interaction.command.name} ${interaction.command.options[2].name}`,
                 id: interaction.command.id
             }));
         return await interaction.reply({embeds: [responseEmbed], ephemeral: true});
