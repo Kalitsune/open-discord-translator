@@ -36,12 +36,18 @@ async function sendMessageAsUser(client, channel, member, translation) {
       return;
   }
     
+  // get the username
+  let username = (member?.nickname || member?.user?.globalName || member?.globalName || member?.username)
+  // userneames cannot contain "discord", changing the username to avoid crashing the bot
+  if (username.toLowerCase().includes("discord")) {
+    username = "[system]"
+  }
   // send the message
   let sentMessages = [];
   for (let i = 0; i < messages.length; i++) {
       sentMessages.push(await webhook.send({
           content: messages[i],
-          username: getFlagEmoji(translation.to) + " " + (member?.nickname || member?.user?.globalName || member?.globalName || member?.username),
+          username: getFlagEmoji(translation.to) + " " + username,
           avatarURL: member.displayAvatarURL({format: 'png', dynamic: true}),
           threadId: isThread ? channel.id : null
       }));
