@@ -2,7 +2,7 @@ const { getFlagEmoji } = require("./getFlagEmoji.js")
 const { splitString } = require("./splitString.js")
 const { ChannelType } = require("discord-api-types/v10")
 
-async function sendMessageAsUser(client, channel, member, translation) {
+async function sendMessageAsUser(client, channel, member, translation, files) {
   const messages = splitString(translation.text, 2000);
 
   // if possible use webhooks, otherwise use the bot
@@ -31,7 +31,10 @@ async function sendMessageAsUser(client, channel, member, translation) {
       await reply(messages[0]);
       // loop through the other messages (if any) and send them as follow ups
       for (let i = 1; i < messages.length; i++) {
-          await followUp(messages[i]);
+          await followUp({
+                content: messages[i],
+                files
+            });
       }
       return;
   }
@@ -47,9 +50,10 @@ async function sendMessageAsUser(client, channel, member, translation) {
   for (let i = 0; i < messages.length; i++) {
       sentMessages.push(await webhook.send({
           content: messages[i],
-          username: getFlagEmoji(translation.to) + " " + username,
+          username: (translation.to ? getFlagEmoji(translation.to) + " " : "") + username,
           avatarURL: member.displayAvatarURL({format: 'png', dynamic: true}),
-          threadId: isThread ? channel.id : null
+          threadId: isThread ? channel.id : null,
+          files
       }));
   }
 
