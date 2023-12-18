@@ -22,14 +22,16 @@ module.exports = {
 }
 
 async function replicaHandler(message, replicaChannel) {
-    let translated = {text: " "}
+    let translated = {text: ""}
     if (message.content) {
         // translate the message
         translated = await message.client.translate(message.content, replicaChannel.target_language_code);
+        translated.to = undefined
     }
 
     // if the source and target channels are equals, check if the message is the same as the original or if it's coming from the same language
     if (replicaChannel.source_channel_id === replicaChannel.target_channel_id && (translated.text === message.content || translated.from === replicaChannel.target_language_code)) return;
+    else translated.text += `[。](<${message.url}>)`; //adds a discrete character at the end of each messages referencing the original message
 
     // if possible use webhooks, otherwise use the bot
     // if the channel is a thread the webhook needs to be created in the parent channel
