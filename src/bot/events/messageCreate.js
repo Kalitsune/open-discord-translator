@@ -41,5 +41,5 @@ async function replicaHandler(message, replicaChannel) {
         return;
     }
     
-    sendMessageAsUser(message.client, destinationChannel, message.author, translated)
+    sendMessageAsUser(message.client, destinationChannel, message.member || message.author, translated)
 }
