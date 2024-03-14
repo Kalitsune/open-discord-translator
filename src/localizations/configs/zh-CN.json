@@ -1,26 +1,26 @@
 {
   "commands": {
     "translate": {
-      "name": "translate",
-      "description": "Translate the text to the specified language.",
-      "success": "Translated ${from}  → ${to}"
+      "name": "翻译",
+      "description": "将文本翻译为指定语言。",
+      "success": "翻译 ${from} → ${to}"
     },
     "send": {
-      "name": "send",
-      "description": "Directly send text in another language.",
+      "name": "发送",
+      "description": "直接发送另一种语言的文本",
       "success": {
-        "title": "Sent!",
-        "description": "Check it out: ${url}",
-        "footer": "[this message will disappear in ${time}s...]",
-        "delete": "Delete"
+        "title": "已发送！",
+        "description": "快来看看吧：${url}",
+        "footer": "[此信息将在${time}秒后消失...]",
+        "delete": "删除"
       }
     },
     "replicas": {
-      "name": "replicas",
-      "description": "Manage replicas.",
+      "name": "复制品",
+      "description": "管理副本。",
       "options": {
         "source": {
-          "name": "source",
+          "name": "来源",
           "description": "The channel whose messages will be translated."
         },
         "target": {
